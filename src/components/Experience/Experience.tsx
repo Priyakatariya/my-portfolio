@@ -5,17 +5,27 @@ import { experience } from '../../data/experience';
 
 const ExperienceSection = styled.section`
   padding: 10%;
-  max-width: 1000px;
+  max-width: 950px;
   margin: 0 auto;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 131, 180, 0.3),
+    rgba(0, 200, 83, 0.3)
+  ); /* subtle transparent gradient */
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(6px); /* soft glass effect */
+  border: 2px solid rgba(255, 255, 255, 0.1);
 `;
 
 const SectionTitle = styled(motion.h2)`
   font-size: 3.2rem;
   font-weight: 700;
-  color: var(--light-slate);
+  color: #1a1a1a;
   margin-bottom: 5rem;
   position: relative;
   text-align: center;
+
   &:after {
     content: '';
     display: block;
@@ -25,7 +35,8 @@ const SectionTitle = styled(motion.h2)`
     transform: translateX(-50%);
     width: 80px;
     height: 3px;
-    background-color: var(--blue-accent);
+    border-radius: 2px;
+    background: linear-gradient(90deg, #007bff, #00c853); /* gradient line */
   }
 `;
 
@@ -36,51 +47,56 @@ const TimelineContainer = styled.div`
 `;
 
 const JobCard = styled(motion.div)`
-  background-color: var(--dark-slate);
+  background-color: rgba(255, 255, 255, 0.05); /* subtle transparent card */
   padding: 3rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   position: relative;
+
   &:before {
     content: '';
     position: absolute;
     top: 0;
     left: -20px;
-    width: 2px;
+    width: 3px;
     height: 100%;
-    background-color: var(--blue-accent);
+    background: linear-gradient(180deg, #007bff, #00c853); /* gradient timeline line */
+    border-radius: 2px;
   }
 `;
 
 const JobTitle = styled.h3`
   font-size: 2.4rem;
-  color: var(--light-slate);
+  color: #1a1a1a;
   margin-bottom: 0.5rem;
 `;
 
 const CompanyAndDuration = styled.p`
   font-size: 1.6rem;
-  color: var(--slate);
+  color: #333333;
   margin-bottom: 1.5rem;
 `;
 
 const DescriptionList = styled.ul`
   list-style-type: none;
   padding-left: 0;
+
   li {
     position: relative;
     margin-bottom: 1rem;
     padding-left: 25px;
-    color: var(--slate);
+    color: #333333;
+
     &:before {
       content: '▹';
       position: absolute;
       left: 0;
-      color: var(--blue-accent);
+      color: #007bff;
       font-size: 1.6rem;
     }
   }
 `;
+
 
 const Experience: React.FC = () => {
   return (

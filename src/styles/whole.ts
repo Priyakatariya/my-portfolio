@@ -1,3 +1,5 @@
+// File: src/styles/whole.ts (Ensure this structure is correct)
+
 import { createGlobalStyle } from 'styled-components';
 
 export const wholeglobalstyles = createGlobalStyle`
@@ -8,13 +10,14 @@ export const wholeglobalstyles = createGlobalStyle`
         box-sizing: border-box;
     }
 
-    /* Color variables for consistent styling */
+    /* Color variables defined on the root element */
     :root {
-        --dark-bg: #0A192F;
-        --light-slate: #404f80ff;
+        --dark-bg: #121E36; 
         --blue-accent: #64FFDA;
+        --light-slate: #CCD6F6;
         --slate: #8892B0;
-        --dark-slate: #495670;
+        --dark-slate: #233554; 
+        --card-bg: #172A45; 
     }
 
     html {
@@ -22,28 +25,16 @@ export const wholeglobalstyles = createGlobalStyle`
         scroll-behavior: smooth;
     }
 
-    /* Main body styles, this will fix the white background */
+    /* Main body styles: IMPLICITLY USE !important IF STYLES ARE NOT APPLYING */
     body {
-        background-color: var(--dark-bg);
-        color: var(--light-slate);
-        font-family: 'Inter', sans-serif;
+        background-color: var(--dark-bg) !important; /* Added !important for safety */
+        color: var(--light-slate) !important;
+        font-family: 'Inter', sans-serif !important;
         font-size: 1.6rem;
         line-height: 1.5;
+        min-height: 100vh; /* Ensure body covers full viewport */
         overflow-x: hidden;
     }
 
-    /* Fix for invisible text on a dark background */
-    h1, h2, h3, h4, h5, h6 {
-      color: var(--light-slate);
-      font-weight: 700;
-    }
-
-    p {
-        color: var(--slate);
-    }
-    
-    a {
-        text-decoration: none;
-        color: var(--blue-accent);
-    }
+    /* ... (rest of the styles) ... */
 `;

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-scroll';
 import { motion } from 'framer-motion';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const NavWrapper = styled(motion.nav)`
   position: fixed;
@@ -9,68 +10,76 @@ const NavWrapper = styled(motion.nav)`
   left: 0;
   width: 100%;
   height: 70px;
-  background: rgba(10, 25, 47, 0.9);
-  backdrop-filter: blur(6px);
+  background: rgba(27, 126, 207, 0.5);
+  backdrop-filter: blur(8px);
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Center navbar items on desktop */
   align-items: center;
   z-index: 1000;
   padding: 0 5%;
-  overflow: hidden; /* Prevents extra scrollbars */
 `;
 
-const NavList = styled.ul`
+const Logo = styled.div`
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  position: absolute;
+  left: 5%;
+`;
+
+const Hamburger = styled.div`
+  display: none;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  position: absolute;
+  right: 5%;
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const NavList = styled(motion.ul)<{ open: boolean }>`
   list-style: none;
   display: flex;
-  gap: 2.5rem;
+  gap: 3rem;
   align-items: center;
-  flex-wrap: wrap; /* Makes it responsive */
   justify-content: center;
 
   @media (max-width: 768px) {
-    gap: 1.5rem;
-  }
-
-  @media (max-width: 480px) {
     flex-direction: column;
-    background: rgba(10, 25, 47, 0.95);
-    position: absolute;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    padding: 1rem 0;
+    position: fixed;
+    top: 0;
+    left: ${({ open }) => (open ? '0' : '-150px')};
+    width: 120px;
+    height: 100vh;
+    background: rgba(10, 25, 70, 0.85);
+    backdrop-filter: blur(8px);
+    padding-top: 80px;
+    gap: 2rem;
+    z-index: 999;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
   }
 `;
 
-const NavItem = styled(motion.li)`
+const NavItem = styled.li`
   cursor: pointer;
 `;
 
 const NavLink = styled(Link)`
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  color: #e6f1ff;
+  color: #fff;
   text-decoration: none;
-  position: relative;
   transition: color 0.3s ease;
 
   &:hover {
-    color: #64ffda;
+    color: #00ffb3;
   }
 
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: #64ffda;
-    transition: width 0.3s ease;
-  }
-
-  &:hover:after {
-    width: 100%;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
   }
 `;
 
@@ -82,20 +91,28 @@ const Navigation: React.FC = () => {
     { name: 'Contact', to: 'contact' },
   ];
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
   return (
     <NavWrapper
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5, delay: 0.8 }}
+      transition={{ duration: 0.5, delay: 0.5 }}
     >
-      <NavList>
-        {navItems.map((item, index) => (
-          <NavItem
-            key={item.name}
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 1 + index * 0.1 }}
-          >
+      <Logo>YourLogo</Logo>
+      <Hamburger onClick={toggleMenu}>
+        {menuOpen ? <FaTimes /> : <FaBars />}
+      </Hamburger>
+      <NavList
+        open={menuOpen}
+        initial={{ x: '-250px' }}
+        animate={{ x: menuOpen ? 0 : '-250px' }}
+        transition={{ type: 'tween', duration: 0.3 }}
+      >
+        {navItems.map((item) => (
+          <NavItem key={item.name} onClick={() => setMenuOpen(false)}>
             <NavLink to={item.to} smooth={true} duration={500}>
               {item.name}
             </NavLink>

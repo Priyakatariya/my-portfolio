@@ -1,22 +1,44 @@
-export const experience = [
+// src/data/experience.ts
+
+export interface ExperienceType {
+  title: string;
+  company: string;
+  duration: string;
+  description: string[];
+}
+
+export const experience: ExperienceType[] = [
   {
-    title: 'GSSoC Mentor',
-    company: 'Girlscript Summer of Code',
-    duration: 'March 2023 - May 2023',
+    title: 'Frontend Developer Mentor',
+    company: 'FSSCOXC',
+    duration: 'Jan 2024 - Present',
     description: [
-      'Mentored and guided a team of 5-7 open-source contributors, providing technical support and code reviews for a React-based project.',
-      'Conducted weekly sessions to help mentees understand complex topics like state management and component architecture.',
-      'Contributed to project documentation and ensured all pull requests followed best practices and coding standards.',
+      'Mentoring students on frontend development using React.js and Next.js.',
+      'Guiding mentees on building responsive and accessible web applications.',
+      'Reviewing project code and providing constructive feedback for best practices.',
+      'Organizing coding workshops and practical sessions to enhance real-world skills.',
     ],
   },
   {
-    title: 'Frontend Developer Intern',
-    company: 'Tech Solutions Inc.',
-    duration: 'Jan 2024 - Present',
+    title: 'Intern - Web Development',
+    company: 'TechSolutions Pvt Ltd',
+    duration: 'Jun 2023 - Dec 2023',
     description: [
-      'Developed and maintained web applications using React.js and TypeScript.',
-      'Collaborated with a cross-functional team to deliver user-facing features and improve overall application performance.',
-      'Participated in code reviews and agile sprints, contributing to a high-quality codebase.',
+      'Developed dynamic frontend components for internal web applications.',
+      'Implemented reusable React components with proper state management.',
+      'Collaborated with the UI/UX team to improve application usability.',
+      'Performed unit testing and bug fixes to ensure robust application performance.',
+    ],
+  },
+  {
+    title: 'Student Developer',
+    company: 'College Projects',
+    duration: 'Jan 2022 - May 2023',
+    description: [
+      'Built multiple web projects using HTML, CSS, JavaScript, and React.',
+      'Designed responsive UI layouts and interactive user interfaces.',
+      'Worked on team-based projects, following agile methodologies.',
+      'Deployed applications using GitHub Pages and Vercel for portfolio showcase.',
     ],
   },
 ];

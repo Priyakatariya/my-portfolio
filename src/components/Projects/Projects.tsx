@@ -5,18 +5,28 @@ import { projects } from '../../data/projects';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 
 const ProjectsSection = styled.section`
-  padding: 10%;
-  max-width: 1200px;
+  padding: 8% 5%;
+  max-width: 1100px; /* similar width to AboutSection */
   margin: 0 auto;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 131, 180, 0.3),
+    rgba(0, 200, 83, 0.3)
+  ); /* subtle transparent gradient */
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(6px); /* soft glass effect */
+  border: 2px solid rgba(255, 255, 255, 0.1);
 `;
 
 const SectionTitle = styled(motion.h2)`
   font-size: 3.2rem;
   font-weight: 700;
-  color: var(--light-slate);
+  color: #1a1a1a; /* dark text for readability */
   margin-bottom: 5rem;
   position: relative;
   text-align: center;
+
   &:after {
     content: '';
     display: block;
@@ -26,24 +36,25 @@ const SectionTitle = styled(motion.h2)`
     transform: translateX(-50%);
     width: 80px;
     height: 3px;
-    background-color: var(--blue-accent);
+    border-radius: 2px;
+    background: linear-gradient(90deg, #007bff, #00c853); /* gradient underline */
   }
 `;
 
 const ProjectGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.5rem;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 `;
 
 const ProjectCard = styled(motion.div)`
-  background-color: var(--dark-slate);
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05); /* subtle transparent card */
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   &:hover {
     transform: translateY(-5px);
@@ -57,31 +68,31 @@ const ProjectImage = styled.img`
 `;
 
 const ProjectContent = styled.div`
-  padding: 2.5rem;
+  padding: 2rem;
 `;
 
 const ProjectTitle = styled.h3`
-  font-size: 2.4rem;
-  color: var(--light-slate);
+  font-size: 2.2rem;
+  color: #1a1a1a;
   margin-bottom: 1rem;
 `;
 
 const ProjectDescription = styled.p`
-  color: var(--slate);
-  margin-bottom: 2rem;
+  color: #333333;
+  margin-bottom: 1.5rem;
 `;
 
 const TechList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
 `;
 
 const TechTag = styled.li`
-  background-color: var(--dark-bg);
-  color: var(--blue-accent);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #9ccdb3ff;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 1.4rem;
@@ -91,11 +102,11 @@ const ProjectLinks = styled.div`
   display: flex;
   gap: 1.5rem;
   a {
-    color: var(--blue-accent);
+    color: #007bff;
     font-size: 2rem;
     transition: color 0.3s ease;
     &:hover {
-      color: var(--light-slate);
+      color: #1a1a1a;
     }
   }
 `;
