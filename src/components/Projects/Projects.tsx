@@ -4,156 +4,182 @@ import { motion } from 'framer-motion';
 import { projects } from '../../data/projects';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 
-const ProjectsSection = styled.section`
-  padding: 8% 5%;
-  max-width: 1100px; /* similar width to AboutSection */
+const Section = styled.section`
+  padding: 80px 5%;
+  max-width: 1100px;
   margin: 0 auto;
-  background: linear-gradient(
-    135deg,
-    rgba(26, 131, 180, 0.3),
-    rgba(0, 200, 83, 0.3)
-  ); /* subtle transparent gradient */
-  border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(6px); /* soft glass effect */
-  border: 2px solid rgba(255, 255, 255, 0.1);
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 3.2rem;
-  font-weight: 700;
-  color: #1a1a1a; /* dark text for readability */
-  margin-bottom: 5rem;
-  position: relative;
+const Title = styled(motion.h2)`
+  font-size: 2.8rem;
+  font-weight: 800;
   text-align: center;
-
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #007bff, #00c853); /* gradient underline */
-  }
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 `;
 
-const ProjectGrid = styled.div`
+const Subtitle = styled(motion.p)`
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 4rem;
+  font-size: 1.1rem;
+`;
+
+const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.5rem;
+  gap: 2rem;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 `;
 
-const ProjectCard = styled(motion.div)`
-  background-color: rgba(255, 255, 255, 0.05); /* subtle transparent card */
-  border-radius: 12px;
+const Card = styled(motion.div)`
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    border-color: rgba(124,58,237,0.4);
+    box-shadow: 0 20px 60px rgba(124,58,237,0.15);
   }
 `;
 
-const ProjectImage = styled.img`
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+const CardGradientTop = styled.div<{ gradient: string }>`
+  height: 6px;
+  background: ${({ gradient }) => gradient};
 `;
 
-const ProjectContent = styled.div`
-  padding: 2rem;
+const CardBody = styled.div`
+  padding: 1.8rem;
 `;
 
 const ProjectTitle = styled.h3`
-  font-size: 2.2rem;
-  color: #1a1a1a;
-  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.95);
+  margin: 0 0 0.3rem;
 `;
 
-const ProjectDescription = styled.p`
-  color: #333333;
-  margin-bottom: 1.5rem;
+const ProjectSubtitle = styled.p`
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.4);
+  margin: 0 0 1rem;
+  font-style: italic;
 `;
 
-const TechList = styled.ul`
+const Description = styled.p`
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.65;
+  margin: 0 0 1.5rem;
+`;
+
+const TechList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  list-style: none;
-  gap: 0.8rem;
+  gap: 0.5rem;
   margin-bottom: 1.5rem;
 `;
 
-const TechTag = styled.li`
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #9ccdb3ff;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 1.4rem;
+const TechTag = styled.span`
+  background: rgba(99,102,241,0.15);
+  border: 1px solid rgba(99,102,241,0.3);
+  color: #a5b4fc;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
 `;
 
-const ProjectLinks = styled.div`
+const Links = styled.div`
   display: flex;
-  gap: 1.5rem;
-  a {
-    color: #007bff;
-    font-size: 2rem;
-    transition: color 0.3s ease;
-    &:hover {
-      color: #1a1a1a;
-    }
+  gap: 1rem;
+`;
+
+const LinkBtn = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  background: rgba(255,255,255,0.04);
+
+  &:hover {
+    background: rgba(124,58,237,0.2);
+    border-color: #7c3aed;
+    color: #c4b5fd;
   }
 `;
 
 const Projects: React.FC = () => {
-    return (
-        <ProjectsSection id="projects">
-            <SectionTitle
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.5 }}
-            >
-                My Projects
-            </SectionTitle>
-            <ProjectGrid>
-                {projects.map((project, index) => (
-                    <ProjectCard
-                        key={index}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true, amount: 0.2 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                    >
-                        <ProjectImage src={project.image} alt={project.title} />
-                        <ProjectContent>
-                            <ProjectTitle>{project.title}</ProjectTitle>
-                            <ProjectDescription>{project.description}</ProjectDescription>
-                            <TechList>
-                                {project.technologies.map((tech, i) => (
-                                    <TechTag key={i}>{tech}</TechTag>
-                                ))}
-                            </TechList>
-                            <ProjectLinks>
-                                <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
-                                    <FaGithub />
-                                </a>
-                                <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
-                                    <FaExternalLinkAlt />
-                                </a>
-                            </ProjectLinks>
-                        </ProjectContent>
-                    </ProjectCard>
+  return (
+    <Section id="projects">
+      <Title
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        Projects
+      </Title>
+      <Subtitle
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+      >
+        Things I've built — from idea to deployment
+      </Subtitle>
+      <Grid>
+        {projects.map((project, i) => (
+          <Card
+            key={i}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.15 }}
+          >
+            <CardGradientTop gradient={project.gradient} />
+            <CardBody>
+              <ProjectTitle>{project.title}</ProjectTitle>
+              <ProjectSubtitle>{project.subtitle}</ProjectSubtitle>
+              <Description>{project.description}</Description>
+              <TechList>
+                {project.technologies.map((tech, j) => (
+                  <TechTag key={j}>{tech}</TechTag>
                 ))}
-            </ProjectGrid>
-        </ProjectsSection>
-    );
+              </TechList>
+              <Links>
+                {project.githubLink && (
+                  <LinkBtn href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                    <FaGithub /> GitHub
+                  </LinkBtn>
+                )}
+                {project.liveLink && project.liveLink !== '#' && (
+                  <LinkBtn href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                    <FaExternalLinkAlt /> Live
+                  </LinkBtn>
+                )}
+              </Links>
+            </CardBody>
+          </Card>
+        ))}
+      </Grid>
+    </Section>
+  );
 };
 
 export default Projects;

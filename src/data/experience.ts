@@ -5,40 +5,38 @@ export interface ExperienceType {
   company: string;
   duration: string;
   description: string[];
+  link?: string;
 }
 
 export const experience: ExperienceType[] = [
   {
-    title: 'Frontend Developer Mentor',
-    company: 'FSSCOXC',
-    duration: 'Jan 2024 - Present',
+    title: 'Developer',
+    company: 'Alumni Cell Web Team, NIT Kurukshetra',
+    duration: 'Oct 2025 – Present',
+    link: '#',
     description: [
-      'Mentoring students on frontend development using React.js and Next.js.',
-      'Guiding mentees on building responsive and accessible web applications.',
-      'Reviewing project code and providing constructive feedback for best practices.',
-      'Organizing coding workshops and practical sessions to enhance real-world skills.',
+      'Contributed to a production-grade alumni portal serving 1000+ users by resolving routing issues and improving system stability.',
+      'Implemented role-based authentication and modular components, reducing code redundancy by 40%.',
+      'Increased Lighthouse performance scores from 65 to 85+ through optimized rendering and state management.',
     ],
   },
   {
-    title: 'Intern - Web Development',
-    company: 'TechSolutions Pvt Ltd',
-    duration: 'Jun 2023 - Dec 2023',
+    title: 'Mentor',
+    company: 'GirlScript Summer of Code (GSSoC \'25)',
+    duration: 'Jul 2025 – Oct 2025',
     description: [
-      'Developed dynamic frontend components for internal web applications.',
-      'Implemented reusable React components with proper state management.',
-      'Collaborated with the UI/UX team to improve application usability.',
-      'Performed unit testing and bug fixes to ensure robust application performance.',
+      'Mentored 25+ developers, improving pull request quality and reducing review cycles.',
+      'Reviewed 100+ pull requests, ensuring proper edge-case handling and scalable architecture.',
     ],
   },
   {
-    title: 'Student Developer',
-    company: 'College Projects',
-    duration: 'Jan 2022 - May 2023',
+    title: 'Open Source Contributor (Rank 26 among 1000+ contributors)',
+    company: 'Social Summer of Code (SSoC \'25)',
+    duration: 'Jun 2025 – Aug 2025',
     description: [
-      'Built multiple web projects using HTML, CSS, JavaScript, and React.',
-      'Designed responsive UI layouts and interactive user interfaces.',
-      'Worked on team-based projects, following agile methodologies.',
-      'Deployed applications using GitHub Pages and Vercel for portfolio showcase.',
+      'Resolved 15+ logic and UI issues across 5+ repositories by analyzing component states and API responses.',
+      'Refactored legacy CSS into reusable Tailwind components, improving UI consistency by 20%.',
+      'Contributed 15+ merged pull requests, securing Rank 26.',
     ],
   },
 ];

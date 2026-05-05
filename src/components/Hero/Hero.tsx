@@ -1,202 +1,270 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import styled, { keyframes } from 'styled-components';
+import { motion } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { Link } from 'react-scroll';
 
-const photos = [
-  '/images/photo1.jpg',
-  '/images/photo2.jpg',
-  '/images/photo3.jpg',
-  '/images/photo4.jpg',
-  '/images/photo5.jpg',
-  '/images/photo6.jpg',
-  '/images/photo7.jpg',
-];
+const blink = keyframes`
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+`;
 
-const HeroSection = styled.section`
+const Section = styled.section`
+  min-height: 100vh;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 100px 5%;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 5% 60px;
   max-width: 1100px;
   margin: 0 auto;
-  background: linear-gradient(135deg, rgba(0,123,255,0.2), rgba(0,200,83,0.2));
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    padding: 30px 3%;
+    padding: 100px 5% 40px;
+    text-align: center;
   }
 `;
 
 const Content = styled.div`
-  flex: 1;
-  text-align: left;
-
-  @media (max-width: 768px) {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
+  max-width: 750px;
 `;
 
-const Intro = styled(motion.p)`
-  color: #007bff;
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
+const Greeting = styled(motion.p)`
+  font-size: 1rem;
+  color: #7c3aed;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
 `;
 
 const Name = styled(motion.h1)`
-  color: #1a1a1a;
-  font-size: 3.5rem;
-  font-weight: 700;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 900;
+  color: rgba(255,255,255,0.97);
   line-height: 1.1;
-  margin-bottom: 0.2rem;
-
-  @media(max-width:768px){
-    font-size: 2.5rem;
-  }
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
 `;
 
-const Tagline = styled(motion.h2)`
-  color: #00c853;
-  font-size: 2.5rem;
+const RoleWrapper = styled(motion.div)`
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
   font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1.2rem;
-
-  @media(max-width:768px){
-    font-size: 1.8rem;
-  }
-`;
-
-const Description = styled(motion.p)`
-  color: #333333;
-  font-size: 1.2rem;
-  max-width: 550px;
-  line-height: 1.5;
-
-  @media(max-width:768px){
-    font-size: 1rem;
-    max-width: 100%;
-  }
-`;
-
-const PhotoStack = styled.div`
-  flex: 1;
-  position: relative;
+  color: rgba(255,255,255,0.45);
+  margin: 0 0 1.5rem;
   display: flex;
-  justify-content: center;
   align-items: center;
-  max-width: 100%;
-  min-height: 400px; /* increase for more spacing */
-  padding-top: 3rem;
-
-  @media (max-width: 1024px) {
-    min-height: 350px;
-    padding-top: 2rem;
-  }
+  gap: 0.5rem;
+  flex-wrap: wrap;
 
   @media (max-width: 768px) {
-    min-height: 300px;
-    padding-top: 1rem;
+    justify-content: center;
   }
 `;
 
-const PhotoCard = styled(motion.img)<{ index: number }>`
-  position: absolute;
-  width: 300px;
-  height: 400px;
-  object-fit: cover;
+const RoleHighlight = styled.span`
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
+
+const Cursor = styled.span`
+  display: inline-block;
+  width: 3px;
+  height: 1.2em;
+  background: #7c3aed;
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: ${blink} 1s step-end infinite;
+`;
+
+const Bio = styled(motion.p)`
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.75;
+  max-width: 600px;
+  margin: 0 0 2.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
+`;
+
+const BadgesRow = styled(motion.div)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 2.5rem;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+`;
+
+const Badge = styled.span`
+  background: rgba(124,58,237,0.12);
+  border: 1px solid rgba(124,58,237,0.25);
+  color: #c4b5fd;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+`;
+
+const Actions = styled(motion.div)`
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+`;
+
+const PrimaryBtn = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 2rem;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
   border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  z-index: ${props => 100 - props.index};
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  border: none;
 
-  @media(max-width:1024px){
-    width: 250px;
-    height: 350px;
-  }
-
-  @media(max-width:768px){
-    width: 200px;
-    height: 280px;
-    position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
-    z-index: 1;
+  &:hover {
+    opacity: 0.88;
+    transform: translateY(-2px);
   }
 `;
+
+const SecondaryBtn = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 2rem;
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.25s ease;
+
+  &:hover {
+    border-color: #7c3aed;
+    color: #c4b5fd;
+    background: rgba(124,58,237,0.1);
+    transform: translateY(-2px);
+  }
+`;
+
+const SocialRow = styled(motion.div)`
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 2.5rem;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+`;
+
+const SocialIcon = styled.a`
+  font-size: 1.4rem;
+  color: rgba(255,255,255,0.35);
+  transition: color 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    color: #a78bfa;
+    transform: translateY(-3px);
+  }
+`;
+
+const roles = [
+  'Full-Stack Developer',
+  'Open Source Contributor',
+  'Competitive Programmer',
+  'NIT Kurukshetra · B.Tech IT',
+];
 
 const Hero: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [typing, setTyping] = useState(true);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener('resize', handleResize);
+    const current = roles[roleIndex];
+    let timeout: ReturnType<typeof setTimeout>;
 
-    const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % photos.length);
-    }, 3000);
-
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  // Get visible indices for desktop (show 3-card stack)
-  const getVisibleIndices = () => {
-    if (isMobile) return [currentIndex];
-    return [
-      currentIndex,
-      (currentIndex + 1) % photos.length,
-      (currentIndex + 2) % photos.length
-    ];
-  };
+    if (typing) {
+      if (displayed.length < current.length) {
+        timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 60);
+      } else {
+        timeout = setTimeout(() => setTyping(false), 1800);
+      }
+    } else {
+      if (displayed.length > 0) {
+        timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 30);
+      } else {
+        setRoleIndex(prev => (prev + 1) % roles.length);
+        setTyping(true);
+      }
+    }
+    return () => clearTimeout(timeout);
+  }, [displayed, typing, roleIndex]);
 
   return (
-    <HeroSection>
+    <Section id="home">
       <Content>
-        <motion.div initial={{opacity:0, y:50}} animate={{opacity:1, y:0}} transition={{staggerChildren:0.2}}>
-          <Intro transition={{duration:0.5, delay:0.5}}>Hi, my name is</Intro>
-          <Name transition={{duration:0.5, delay:0.7}}>Priya.</Name>
-          <Tagline transition={{duration:0.5, delay:0.9}}>Web Developer.</Tagline>
-          <Description transition={{ duration: 0.5, delay: 1.1 }}>
-            I am a frontend developer passionate about creating smooth and engaging web experiences. 
-            I build responsive, fast, and visually appealing websites that delight users. 
-            My focus is on seamless interactions, modern design, and performance-driven applications.
-          </Description>
-        </motion.div>
+        <Greeting initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          👋 Hello, World!
+        </Greeting>
+        <Name initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
+          I'm Priya Katariya
+        </Name>
+        <RoleWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
+          <RoleHighlight>{displayed}</RoleHighlight>
+          <Cursor />
+        </RoleWrapper>
+        <Bio initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
+          B.Tech Information Technology student at <strong style={{ color: 'rgba(255,255,255,0.8)' }}>NIT Kurukshetra</strong> (CGPA: 8.96/10).
+          I build production-grade web apps, contribute to open source, and solve 1700+ competitive programming problems.
+          Currently a Developer at the Alumni Cell Web Team.
+        </Bio>
+        <BadgesRow initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
+          <Badge>🏆 SWoC Top 100</Badge>
+          <Badge>🔥 LeetCode 1805</Badge>
+          <Badge>⭐ CodeChef 3-Star</Badge>
+          <Badge>🚀 SSoC Rank 26</Badge>
+          <Badge>💡 1700+ DSA</Badge>
+        </BadgesRow>
+        <Actions initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }}>
+          <PrimaryBtn to="projects" smooth duration={500} offset={-70}>
+            View Projects
+          </PrimaryBtn>
+          <SecondaryBtn href="mailto:priyakatariya2007@gmail.com">
+            <FaEnvelope /> Contact Me
+          </SecondaryBtn>
+        </Actions>
+        <SocialRow initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.7 }}>
+          <SocialIcon href="https://github.com/priyakatariya" target="_blank" rel="noopener noreferrer">
+            <FaGithub />
+          </SocialIcon>
+          <SocialIcon href="https://linkedin.com/in/priya-27a522333" target="_blank" rel="noopener noreferrer">
+            <FaLinkedin />
+          </SocialIcon>
+          <SocialIcon href="mailto:priyakatariya2007@gmail.com">
+            <FaEnvelope />
+          </SocialIcon>
+        </SocialRow>
       </Content>
-
-      <PhotoStack>
-        <AnimatePresence>
-          {getVisibleIndices().map((index, stackPosition) => {
-            const photo = photos[index];
-
-            const tilt = isMobile ? 0 : Math.random() * 20 - 10;
-            const offsetY = isMobile ? 0 : -stackPosition * 15;
-            const offsetX = isMobile ? 0 : stackPosition * 10;
-
-            return (
-              <PhotoCard
-                key={photo + currentIndex} // triggers re-animation on index change
-                src={photo}
-                index={stackPosition}
-                initial={{ opacity: 0, scale: 0.9, rotate: tilt, y: 50, x: 0 }}
-                animate={{ opacity: 1, scale: 1, rotate: tilt, y: offsetY, x: offsetX }}
-                exit={{ opacity: 0, scale: 0.8, y: -50, x: 0 }}
-                transition={{ duration: 0.8, ease: 'easeInOut', type: 'spring', stiffness: 120 }}
-              />
-            );
-          })}
-        </AnimatePresence>
-      </PhotoStack>
-    </HeroSection>
+    </Section>
   );
 };
 

@@ -3,134 +3,190 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { experience } from '../../data/experience';
 
-const ExperienceSection = styled.section`
-  padding: 10%;
-  max-width: 950px;
+const Section = styled.section`
+  padding: 80px 5%;
+  max-width: 1100px;
   margin: 0 auto;
-  background: linear-gradient(
-    135deg,
-    rgba(26, 131, 180, 0.3),
-    rgba(0, 200, 83, 0.3)
-  ); /* subtle transparent gradient */
-  border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(6px); /* soft glass effect */
-  border: 2px solid rgba(255, 255, 255, 0.1);
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 3.2rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 5rem;
-  position: relative;
+const Title = styled(motion.h2)`
+  font-size: 2.8rem;
+  font-weight: 800;
   text-align: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #06b6d4, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
 
-  &:after {
+const Subtitle = styled(motion.p)`
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 4rem;
+  font-size: 1.1rem;
+`;
+
+const Timeline = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &::before {
     content: '';
-    display: block;
     position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #7c3aed, #06b6d4, transparent);
     border-radius: 2px;
-    background: linear-gradient(90deg, #007bff, #00c853); /* gradient line */
+  }
+
+  @media (max-width: 768px) {
+    &::before { display: none; }
   }
 `;
 
-const TimelineContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
+const Dot = styled.div`
+  position: absolute;
+  left: 10px;
+  top: 2rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  box-shadow: 0 0 12px rgba(124,58,237,0.5);
+  z-index: 1;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
-const JobCard = styled(motion.div)`
-  background-color: rgba(255, 255, 255, 0.05); /* subtle transparent card */
-  padding: 3rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+const CardWrapper = styled.div`
   position: relative;
+  padding-left: 50px;
 
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -20px;
-    width: 3px;
-    height: 100%;
-    background: linear-gradient(180deg, #007bff, #00c853); /* gradient timeline line */
-    border-radius: 2px;
+  @media (max-width: 768px) {
+    padding-left: 0;
+  }
+`;
+
+const Card = styled(motion.div)`
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 1.8rem 2rem;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    transform: translateX(6px);
+    border-color: rgba(124,58,237,0.4);
+    background: rgba(255,255,255,0.06);
   }
 `;
 
 const JobTitle = styled.h3`
-  font-size: 2.4rem;
-  color: #1a1a1a;
-  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.95);
+  margin: 0 0 0.4rem;
 `;
 
-const CompanyAndDuration = styled.p`
-  font-size: 1.6rem;
-  color: #333333;
-  margin-bottom: 1.5rem;
+const Meta = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
 `;
 
-const DescriptionList = styled.ul`
-  list-style-type: none;
-  padding-left: 0;
+const Company = styled.span`
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #7c3aed;
+  background: rgba(124,58,237,0.12);
+  padding: 0.2rem 0.8rem;
+  border-radius: 999px;
+`;
 
-  li {
-    position: relative;
-    margin-bottom: 1rem;
-    padding-left: 25px;
-    color: #333333;
+const Duration = styled.span`
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.38);
+  font-family: 'Fira Code', monospace;
+`;
 
-    &:before {
-      content: '▹';
-      position: absolute;
-      left: 0;
-      color: #007bff;
-      font-size: 1.6rem;
-    }
+const BulletList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const Bullet = styled.li`
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+  padding-left: 1.2rem;
+  position: relative;
+
+  &::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: #06b6d4;
   }
 `;
 
-
 const Experience: React.FC = () => {
   return (
-    <ExperienceSection id="experience">
-      <SectionTitle
-        initial={{ opacity: 0, y: 50 }}
+    <Section id="experience">
+      <Title
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
-        My Experience
-      </SectionTitle>
-      <TimelineContainer>
-        {experience.map((job, index) => (
-          <JobCard
-            key={index}
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-          >
-            <JobTitle>{job.title}</JobTitle>
-            <CompanyAndDuration>
-              {job.company} • {job.duration}
-            </CompanyAndDuration>
-            <DescriptionList>
-              {job.description.map((point, i) => (
-                <li key={i}>{point}</li>
-              ))}
-            </DescriptionList>
-          </JobCard>
+        Experience
+      </Title>
+      <Subtitle
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+      >
+        Open source, mentoring & real-world development
+      </Subtitle>
+      <Timeline>
+        {experience.map((job, i) => (
+          <CardWrapper key={i}>
+            <Dot />
+            <Card
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.15 }}
+            >
+              <JobTitle>{job.title}</JobTitle>
+              <Meta>
+                <Company>{job.company}</Company>
+                <Duration>{job.duration}</Duration>
+              </Meta>
+              <BulletList>
+                {job.description.map((pt, j) => (
+                  <Bullet key={j}>{pt}</Bullet>
+                ))}
+              </BulletList>
+            </Card>
+          </CardWrapper>
         ))}
-      </TimelineContainer>
-    </ExperienceSection>
+      </Timeline>
+    </Section>
   );
 };
 

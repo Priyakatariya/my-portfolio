@@ -2,107 +2,213 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-const AboutSection = styled(motion.section)`
-  padding: 5% 5%;
+const Section = styled.section`
+  padding: 80px 5%;
   max-width: 1100px;
   margin: 0 auto;
-  background: linear-gradient(
-    135deg,
-    rgba(26, 131, 180, 0.2),
-    rgba(138, 178, 78, 0.2)
-  );
-  border-radius: 14px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(6px);
-  border: 2px solid rgba(255, 255, 255, 0.1);
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 2.2rem;
+const Title = styled(motion.h2)`
+  font-size: 2.8rem;
   font-weight: 800;
-  color: #1a1a1a;
   text-align: center;
-  margin-bottom: 2.5rem;
-  position: relative;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #38bdf8, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+`;
 
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #007bff, #00c853);
+const Subtitle = styled(motion.p)`
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 4rem;
+  font-size: 1.1rem;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 `;
 
-const Bio = styled.div`
-  font-size: 1.35rem;  /* smaller text */
-  line-height: 1.6;    /* tighter line spacing */
-  color: #333;
-
-  p {
-    margin-bottom: 1.5rem;
-    &:first-letter {
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: #007bff;
-    }
-  }
+const BioBlock = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 `;
 
-const paragraphVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-};
+const BioPara = styled.p`
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.75;
+`;
+
+const Highlight = styled.span`
+  color: #a78bfa;
+  font-weight: 600;
+`;
+
+const InfoGrid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+`;
+
+const InfoCard = styled.div`
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 1.2rem;
+`;
+
+const InfoLabel = styled.p`
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.4rem;
+`;
+
+const InfoValue = styled.p`
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.88);
+  font-weight: 600;
+  margin: 0;
+`;
+
+const CourseList = styled(motion.div)`
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(124,58,237,0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  grid-column: 1 / -1;
+`;
+
+const CourseTitle = styled.h3`
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #a78bfa;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 1rem;
+`;
+
+const Courses = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+`;
+
+const CourseTag = styled.span`
+  background: rgba(124,58,237,0.12);
+  border: 1px solid rgba(124,58,237,0.2);
+  color: #c4b5fd;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+`;
 
 const About: React.FC = () => {
-  const paragraphs = [
-    `Hi, I'm Priya, a second-year B.Tech student in Information Technology at NIT Kurukshetra. 
-    I’m passionate about web development and dedicated to sharpening my skills in both frontend and backend technologies. 
-    I enjoy solving problems, building meaningful projects, and continuously learning through hands-on experience. 
-    Alongside development, I’m also strengthening my foundation in Data Structures and Algorithms (DSA) and actively practicing Competitive Programming to enhance my problem-solving abilities.  
-    With a strong curiosity and drive to grow, I’m committed to becoming a well-rounded developer who builds impactful tech solutions.`,
-
-    `With hands-on experience in frontend development, I specialize in crafting responsive, user-centric interfaces using modern technologies. 
-    My journey in tech is fueled by a passion to create seamless digital experiences, continuously learn, and build solutions that make a real impact.`,
-
-    `As an extrovert, I genuinely enjoy connecting with new people and engaging in meaningful conversations. 
-    `,
-  ];
   return (
-    <AboutSection
-      id="about"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.5 }}
-    >
-      <SectionTitle
-        initial={{ opacity: 0, y: 40 }}
+    <Section id="about">
+      <Title
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.7 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
         About Me
-      </SectionTitle>
+      </Title>
+      <Subtitle
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+      >
+        Who I am, where I come from, and what drives me
+      </Subtitle>
+      <Grid>
+        <BioBlock
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <BioPara>
+            Hi! I'm <Highlight>Priya Katariya</Highlight>, a B.Tech student in Information Technology
+            at <Highlight>NIT Kurukshetra</Highlight> (CGPA: 8.96/10). I'm passionate about building
+            production-grade web applications and contributing to open source.
+          </BioPara>
+          <BioPara>
+            I've worked as a <Highlight>Developer</Highlight> on the Alumni Cell Web Team, served as a{' '}
+            <Highlight>Mentor</Highlight> in GSSoC '25, and ranked <Highlight>26th among 1000+</Highlight>{' '}
+            contributors in SSoC '25. My stack spans React, Next.js, Node.js, Firebase, MongoDB, and more.
+          </BioPara>
+          <BioPara>
+            Beyond code, I'm also an active competitive programmer with <Highlight>1700+ DSA problems</Highlight>{' '}
+            solved across platforms, a LeetCode rating of <Highlight>1805</Highlight>, and a{' '}
+            <Highlight>Top 100</Highlight> ranking in SWoC '26. I believe in building things that matter.
+          </BioPara>
+        </BioBlock>
 
-      <Bio>
-        {paragraphs.map((text, i) => (
-          <motion.p
-            key={i}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={paragraphVariants}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <InfoGrid>
+            <InfoCard>
+              <InfoLabel>Degree</InfoLabel>
+              <InfoValue>B.Tech IT</InfoValue>
+            </InfoCard>
+            <InfoCard>
+              <InfoLabel>University</InfoLabel>
+              <InfoValue>NIT Kurukshetra</InfoValue>
+            </InfoCard>
+            <InfoCard>
+              <InfoLabel>CGPA</InfoLabel>
+              <InfoValue>8.96 / 10</InfoValue>
+            </InfoCard>
+            <InfoCard>
+              <InfoLabel>Batch</InfoLabel>
+              <InfoValue>Aug 2024 – Present</InfoValue>
+            </InfoCard>
+            <InfoCard>
+              <InfoLabel>Email</InfoLabel>
+              <InfoValue style={{ fontSize: '0.78rem' }}>priyakatariya2007@gmail.com</InfoValue>
+            </InfoCard>
+            <InfoCard>
+              <InfoLabel>Phone</InfoLabel>
+              <InfoValue>+91-886-5020-721</InfoValue>
+            </InfoCard>
+          </InfoGrid>
+
+          <CourseList
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            style={{ marginTop: '1rem' }}
           >
-            {text}
-          </motion.p>
-        ))}
-      </Bio>
-    </AboutSection>
+            <CourseTitle>Key Courses</CourseTitle>
+            <Courses>
+              {['Data Structures & Algorithms', 'OOP', 'Operating Systems', 'Computer Networks', 'Database Management Systems'].map(c => (
+                <CourseTag key={c}>{c}</CourseTag>
+              ))}
+            </Courses>
+          </CourseList>
+        </motion.div>
+      </Grid>
+    </Section>
   );
 };
 

@@ -1,187 +1,159 @@
-// Skills.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import type { IconType } from 'react-icons';
-import {
-  SiHtml5,
-  SiCss3,
-  SiJavascript,
-  SiTypescript,
-  SiReact,
-  SiRedux,
-  SiNextdotjs,
-  SiTailwindcss,
-  //SiNodeDotJs,
-  SiExpress,
-  SiMongodb,
-  SiGit,
-  SiGithub,
- // SiVisualstudiocode,
-  SiFigma,
-  SiPostman,
-  SiWebpack,
-} from 'react-icons/si';
+import { skills } from '../../data/skills';
 
-interface Skill {
-  name: string;
-  icon: IconType;
-}
+type Category = 'All' | 'Languages' | 'Frameworks' | 'Databases' | 'Tools';
 
-const skillsData: { [category: string]: Skill[] } = {
-  Frontend: [
-    { name: 'HTML5', icon: SiHtml5 },
-    { name: 'CSS3', icon: SiCss3 },
-    { name: 'JavaScript', icon: SiJavascript },
-    { name: 'TypeScript', icon: SiTypescript },
-    { name: 'React', icon: SiReact },
-    { name: 'Redux', icon: SiRedux },
-    { name: 'Next.js', icon: SiNextdotjs },
-    { name: 'Tailwind CSS', icon: SiTailwindcss },
-  ],
-  Backend: [
-   // { name: 'Node.js', icon: SiNodeDotJs },
-    { name: 'Express', icon: SiExpress },
-    { name: 'MongoDB', icon: SiMongodb },
-  ],
-  Tools: [
-    { name: 'Git', icon: SiGit },
-    { name: 'GitHub', icon: SiGithub },
-    //{ name: 'VS Code', icon: SiVisualstudiocode },
-    //{ name: 'Figma', icon: SiFigma },
-    { name: 'Postman', icon: SiPostman },
-    //{ name: 'Webpack', icon: SiWebpack },
-  ],
-};
-
-const SkillsSection = styled.section`
-  padding: 8% 5%;
+const Section = styled.section`
+  padding: 80px 5%;
   max-width: 1100px;
   margin: 0 auto;
-  background: linear-gradient(
-    135deg,
-    rgba(26, 131, 180, 0.3),
-    rgba(0, 200, 83, 0.3)
-  );
-  border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(6px);
-  border: 2px solid rgba(255, 255, 255, 0.1);
 `;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 3.2rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 5rem;
+const Title = styled(motion.h2)`
+  font-size: 2.8rem;
+  font-weight: 800;
   text-align: center;
-  position: relative;
-
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #007bff, #00c853);
-  }
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 `;
 
-const CategoryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-`;
-
-const CategoryCard = styled(motion.div)`
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 2rem;
-  flex: 1;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-`;
-
-const CategoryTitle = styled.h3`
-  font-size: 2rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 1.5rem;
+const Subtitle = styled(motion.p)`
   text-align: center;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
 `;
 
-const SkillsGrid = styled.div`
+const FilterBar = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 3rem;
 `;
 
-const SkillItem = styled.div`
+const FilterBtn = styled.button<{ active: boolean }>`
+  padding: 0.5rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid ${({ active }) => active ? '#7c3aed' : 'rgba(255,255,255,0.12)'};
+  background: ${({ active }) => active ? 'rgba(124,58,237,0.25)' : 'rgba(255,255,255,0.04)'};
+  color: ${({ active }) => active ? '#a78bfa' : 'rgba(255,255,255,0.55)'};
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+
+  &:hover {
+    border-color: #7c3aed;
+    color: #a78bfa;
+  }
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 1.2rem;
+`;
+
+const SkillCard = styled(motion.div)<{ color: string }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  width: 80px;
-`;
-
-const SkillIcon = styled.div`
-  font-size: 2.5rem;
-  color: #6f086fff;
-  transition: transform 0.3s ease, color 0.3s ease;
+  gap: 0.6rem;
+  padding: 1.2rem 0.8rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  cursor: default;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 
   &:hover {
-    transform: scale(1.2);
-    color: #00c853;
+    transform: translateY(-5px);
+    border-color: ${({ color }) => color};
+    background: rgba(255,255,255,0.08);
+  }
+
+  &:hover svg, &:hover .icon {
+    filter: drop-shadow(0 0 8px ${({ color }) => color});
   }
 `;
 
-const SkillName = styled.p`
-  font-size: 1.2rem;
-  color: #333333;
-  text-align: center;
+const IconWrapper = styled.div<{ color: string }>`
+  font-size: 2.2rem;
+  color: ${({ color }) => color};
+  transition: filter 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
+const SkillName = styled.p`
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  margin: 0;
+  font-weight: 500;
+`;
+
+const CATEGORIES: Category[] = ['All', 'Languages', 'Frameworks', 'Databases', 'Tools'];
+
 const Skills: React.FC = () => {
+  const [active, setActive] = useState<Category>('All');
+
+  const filtered = active === 'All' ? skills : skills.filter(s => s.type === active);
+
   return (
-    <SkillsSection id="skills">
-      <SectionTitle
-        initial={{ opacity: 0, y: 50 }}
+    <Section id="skills">
+      <Title
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
-        My Skills
-      </SectionTitle>
-      <CategoryContainer>
-        {Object.entries(skillsData).map(([category, skills]) => (
-          <CategoryCard
-            key={category}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5 }}
-          >
-            <CategoryTitle>{category}</CategoryTitle>
-            <SkillsGrid>
-              {skills.map((skill) => (
-                <SkillItem key={skill.name}>
-                  <SkillIcon as={skill.icon} />
-                  <SkillName>{skill.name}</SkillName>
-                </SkillItem>
-              ))}
-            </SkillsGrid>
-          </CategoryCard>
+        Technical Skills
+      </Title>
+      <Subtitle
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+      >
+        Languages, frameworks, databases & tools I work with
+      </Subtitle>
+      <FilterBar>
+        {CATEGORIES.map(cat => (
+          <FilterBtn key={cat} active={active === cat} onClick={() => setActive(cat)}>
+            {cat}
+          </FilterBtn>
         ))}
-      </CategoryContainer>
-    </SkillsSection>
+      </FilterBar>
+      <Grid>
+        {filtered.map((skill, i) => {
+          const Icon = skill.icon;
+          return (
+            <SkillCard
+              key={skill.name}
+              color={skill.color}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: i * 0.04 }}
+            >
+              <IconWrapper color={skill.color}>
+                <Icon />
+              </IconWrapper>
+              <SkillName>{skill.name}</SkillName>
+            </SkillCard>
+          );
+        })}
+      </Grid>
+    </Section>
   );
 };
 

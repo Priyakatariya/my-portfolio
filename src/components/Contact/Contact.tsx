@@ -1,134 +1,134 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaLinkedin, FaGithub } from 'react-icons/fa';
-const ContactSection = styled.section.attrs({ id: 'contact' })`
-  padding: 10%; /* slightly reduced padding */
-  max-width: 950px; /* narrower than before */
-  min-height: 500px; /* ensures some vertical space */
-  margin: 0 auto;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 123, 255, 0.3),
-    rgba(0, 200, 83, 0.3)
-  ); /* subtle transparent gradient */
-  border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(6px); /* soft glass effect */
-  border: 2px solid rgba(255, 255, 255, 0.1); /* subtle border */
+import { FaEnvelope, FaLinkedin, FaGithub, FaPhone } from 'react-icons/fa';
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* vertically center content */
+const Section = styled.section`
+  padding: 80px 5%;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+` ;
+
+const Title = styled(motion.h2)`
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #06b6d4, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 `;
 
+const Desc = styled(motion.p)`
+  color: rgba(255,255,255,0.5);
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin: 0 auto 3rem;
+  line-height: 1.7;
+`;
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 3rem;
-  font-weight: 800;
-  color: #1a1a1a; /* dark text */
-  margin-bottom: 4rem;
-  text-align: center;
-  position: relative;
+const EmailBtn = styled(motion.a)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 14px;
+  text-decoration: none;
+  margin-bottom: 3rem;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #007bff, #00c853); /* gradient underline */
+  &:hover {
+    opacity: 0.85;
+    transform: translateY(-3px);
   }
 `;
 
-const Description = styled(motion.p)`
-  color: #333333;
-  margin-bottom: 4rem;
-  font-size: 1.7rem;
-  text-align: center;
-`;
-
-const SocialLinks = styled(motion.div)`
+const SocialRow = styled(motion.div)`
   display: flex;
   justify-content: center;
-  gap: 3rem;
-  margin-top: 3rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+`;
 
-  a {
-    color: #1a1a1a;
-    font-size: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.3s ease, transform 0.3s ease;
+const SocialCard = styled(motion.a)<{ color: string }>`
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
 
-    &:hover {
-      color: #007bff; /* hover accent */
-      transform: scale(1.2) rotate(10deg); /* hover motion effect */
-    }
+  svg { font-size: 1.1rem; color: ${({ color }) => color}; }
+
+  &:hover {
+    border-color: ${({ color }) => color};
+    color: #fff;
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.07);
   }
 `;
 
 const Contact: React.FC = () => {
   return (
-    <ContactSection>
-      <SectionTitle
-        initial={{ opacity: 0, y: 50 }}
+    <Section id="contact">
+      <Title
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
         Get In Touch
-      </SectionTitle>
-
-      <Description
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+      </Title>
+      <Desc
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.15 }}
       >
-        I am currently open to new opportunities. Whether you have a question
-        or just want to say hi, I'll do my best to get back to you!
-      </Description>
-
-      <SocialLinks
-        initial={{ opacity: 0, y: 50 }}
+        I'm open to new opportunities, collaborations, or just a friendly chat. 
+        Feel free to reach out!
+      </Desc>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.25 }}
       >
-        <motion.a
-          whileHover={{ scale: 1.2, rotate: 10 }}
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=priyakatiya2007@gmail.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaEnvelope />
-        </motion.a>
-
-        <motion.a
-          whileHover={{ scale: 1.2, rotate: 10 }}
-          href="https://linkedin.com/in/priya-27a522333"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaLinkedin />
-        </motion.a>
-
-        <motion.a
-          whileHover={{ scale: 1.2, rotate: 10 }}
-          href="https://github.com/Priyakatariya"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaGithub />
-        </motion.a>
-      </SocialLinks>
-    </ContactSection>
+        <EmailBtn href="mailto:priyakatariya2007@gmail.com">
+          <FaEnvelope /> Say Hello!
+        </EmailBtn>
+      </motion.div>
+      <SocialRow
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
+        <SocialCard href="mailto:priyakatariya2007@gmail.com" color="#06b6d4">
+          <FaEnvelope /> priyakatariya2007@gmail.com
+        </SocialCard>
+        <SocialCard href="https://linkedin.com/in/priya-27a522333" target="_blank" rel="noopener noreferrer" color="#0077b5">
+          <FaLinkedin /> LinkedIn
+        </SocialCard>
+        <SocialCard href="https://github.com/priyakatariya" target="_blank" rel="noopener noreferrer" color="#f0f6fc">
+          <FaGithub /> GitHub
+        </SocialCard>
+        <SocialCard href="tel:+918865020721" color="#10b981">
+          <FaPhone /> +91-886-5020-721
+        </SocialCard>
+      </SocialRow>
+    </Section>
   );
 };
 

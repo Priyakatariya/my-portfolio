@@ -4,36 +4,33 @@ import { FaHeart } from 'react-icons/fa';
 
 const FooterContainer = styled.footer`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 3rem 5%;
-  font-size: 1.4rem;
+  gap: 0.5rem;
+  padding: 2.5rem 5%;
   text-align: center;
-  margin-top: 5rem;
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 2rem;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.88rem;
+`;
 
-  color: #1a1a1a;
-
-  background: linear-gradient(
-    135deg,
-    rgba(26, 131, 180, 0.3),
-    rgba(0, 200, 83, 0.3)
-  ); /* subtle transparent gradient */
-  border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(6px); /* soft glass effect */
-  border: 2px solid rgba(255, 255, 255, 0.1);
+const Brand = styled.span`
+  font-weight: 700;
+  background: linear-gradient(135deg, #a78bfa, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 `;
 
 const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <span>
-        Designed & Built by You{' '}
-        <FaHeart style={{ color: '#007bff', margin: '0 5px' }} /> 
+        Designed & Built by <Brand>Priya Katariya</Brand>{' '}
+        with <FaHeart style={{ color: '#7c3aed', margin: '0 3px', verticalAlign: 'middle' }} />
       </span>
+      <span>© {new Date().getFullYear()} · NIT Kurukshetra · B.Tech IT</span>
     </FooterContainer>
   );
 };
