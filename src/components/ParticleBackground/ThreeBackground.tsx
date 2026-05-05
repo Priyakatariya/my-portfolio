@@ -1,116 +1,166 @@
-import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
+import React, { useEffect, useRef } from 'react';
 
-// Floating animated particles field
-function ParticleField() {
-  const meshRef = useRef<THREE.Points>(null);
-
-  const [positions, colors] = useMemo(() => {
-    const count = 2000;
-    const positions = new Float32Array(count * 3);
-    const colors = new Float32Array(count * 3);
-    const palette = [
-      new THREE.Color('#7c3aed'),
-      new THREE.Color('#6366f1'),
-      new THREE.Color('#06b6d4'),
-      new THREE.Color('#a855f7'),
-      new THREE.Color('#38bdf8'),
-    ];
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 40;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 40;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
-      const c = palette[Math.floor(Math.random() * palette.length)];
-      colors[i * 3] = c.r;
-      colors[i * 3 + 1] = c.g;
-      colors[i * 3 + 2] = c.b;
-    }
-    return [positions, colors];
-  }, []);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * 0.03;
-      meshRef.current.rotation.x = state.clock.elapsedTime * 0.01;
-    }
-  });
-
-  return (
-    <points ref={meshRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          args={[colors, 3]}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.08}
-        vertexColors
-        transparent
-        opacity={0.7}
-        sizeAttenuation
-      />
-    </points>
-  );
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  alpha: number;
 }
 
-// Floating wireframe sphere
-function FloatingOrb({ position, speed, scale }: { position: [number, number, number]; speed: number; scale: number }) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.elapsedTime * speed;
-      meshRef.current.rotation.y = state.clock.elapsedTime * speed * 0.7;
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * speed * 0.5) * 0.5;
-    }
-  });
-  return (
-    <mesh ref={meshRef} position={position} scale={scale}>
-      <icosahedronGeometry args={[1, 1]} />
-      <meshStandardMaterial
-        color="#7c3aed"
-        wireframe
-        transparent
-        opacity={0.15}
-        emissive="#6366f1"
-        emissiveIntensity={0.3}
-      />
-    </mesh>
-  );
+const CONNECTION_DISTANCE = 140;
+const MOUSE_REPEL_RADIUS = 120;
+const MOUSE_REPEL_STRENGTH = 0.4;
+const PARTICLE_COUNT_FACTOR = 8000; // one particle per N px²
+
+function hexToRgb(hex: string) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `${r},${g},${b}`;
 }
 
-// Torus knot accent
-function TorusKnot({ position }: { position: [number, number, number] }) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.elapsedTime * 0.15;
-      meshRef.current.rotation.z = state.clock.elapsedTime * 0.1;
-    }
-  });
-  return (
-    <mesh ref={meshRef} position={position}>
-      <torusKnotGeometry args={[0.8, 0.2, 80, 16]} />
-      <meshStandardMaterial
-        color="#06b6d4"
-        wireframe
-        transparent
-        opacity={0.12}
-        emissive="#38bdf8"
-        emissiveIntensity={0.2}
-      />
-    </mesh>
-  );
-}
+const COLORS = ['#7c3aed', '#6366f1', '#06b6d4', '#a855f7', '#38bdf8'];
 
 const ThreeBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: -9999, y: -9999 });
+  const particlesRef = useRef<Particle[]>([]);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // ── Resize ──────────────────────────────────────────────────────────────
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
+
+    const initParticles = () => {
+      const area = canvas.width * canvas.height;
+      const count = Math.floor(area / PARTICLE_COUNT_FACTOR);
+      particlesRef.current = Array.from({ length: count }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        radius: Math.random() * 1.5 + 0.6,
+        alpha: Math.random() * 0.5 + 0.3,
+      }));
+    };
+
+    // ── Mouse ───────────────────────────────────────────────────────────────
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    };
+    const handleMouseLeave = () => {
+      mouseRef.current = { x: -9999, y: -9999 };
+    };
+
+    // ── Draw ────────────────────────────────────────────────────────────────
+    const colorRgbs = COLORS.map(hexToRgb);
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const particles = particlesRef.current;
+      const mx = mouseRef.current.x;
+      const my = mouseRef.current.y;
+
+      // Update positions
+      for (const p of particles) {
+        // Mouse repulsion
+        const dx = p.x - mx;
+        const dy = p.y - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < MOUSE_REPEL_RADIUS && dist > 0) {
+          const force = (MOUSE_REPEL_RADIUS - dist) / MOUSE_REPEL_RADIUS;
+          p.vx += (dx / dist) * force * MOUSE_REPEL_STRENGTH;
+          p.vy += (dy / dist) * force * MOUSE_REPEL_STRENGTH;
+        }
+
+        // Dampen velocity
+        p.vx *= 0.98;
+        p.vy *= 0.98;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Wrap edges
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+      }
+
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < CONNECTION_DISTANCE) {
+            const opacity = (1 - dist / CONNECTION_DISTANCE) * 0.28;
+            const colorIdx = (i + j) % colorRgbs.length;
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(${colorRgbs[colorIdx]},${opacity})`;
+            ctx.lineWidth = 0.7;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw dots
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const colorIdx = i % colorRgbs.length;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${colorRgbs[colorIdx]},${p.alpha})`;
+        ctx.fill();
+      }
+
+      // Draw mouse glow
+      if (mx > 0 && mx < canvas.width) {
+        const grd = ctx.createRadialGradient(mx, my, 0, mx, my, MOUSE_REPEL_RADIUS);
+        grd.addColorStop(0, 'rgba(124,58,237,0.08)');
+        grd.addColorStop(1, 'rgba(124,58,237,0)');
+        ctx.beginPath();
+        ctx.arc(mx, my, MOUSE_REPEL_RADIUS, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+      }
+
+      rafRef.current = requestAnimationFrame(draw);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('resize', resize);
+
+    resize();
+    draw();
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
+
   return (
-    <div
+    <canvas
+      ref={canvasRef}
       style={{
         position: 'fixed',
         top: 0,
@@ -119,25 +169,9 @@ const ThreeBackground: React.FC = () => {
         height: '100%',
         zIndex: 0,
         pointerEvents: 'none',
+        display: 'block',
       }}
-    >
-      <Canvas
-        camera={{ position: [0, 0, 10], fov: 60 }}
-        style={{ background: 'transparent' }}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#7c3aed" />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#06b6d4" />
-
-        <ParticleField />
-        <FloatingOrb position={[-5, 2, -3]} speed={0.2} scale={2} />
-        <FloatingOrb position={[6, -3, -5]} speed={0.15} scale={3} />
-        <FloatingOrb position={[0, 5, -8]} speed={0.1} scale={1.5} />
-        <TorusKnot position={[4, 3, -6]} />
-        <TorusKnot position={[-6, -2, -4]} />
-      </Canvas>
-    </div>
+    />
   );
 };
 

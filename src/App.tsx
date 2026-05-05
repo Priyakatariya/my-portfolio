@@ -14,43 +14,44 @@ import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap');
-
   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body, html, #root {
     width: 100%;
     min-height: 100vh;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: #08081a;
-    color: rgba(255,255,255,0.9);
+    background: #07071a;
+    color: rgba(255, 255, 255, 0.88);
     overflow-x: hidden;
-    scroll-behavior: smooth;
   }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #08081a;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #7c3aed;
-    border-radius: 3px;
-  }
-
+  /* Uniform section spacing — no section backgrounds, just consistent dark */
   section {
     position: relative;
     z-index: 2;
   }
 
-  strong {
-    font-weight: 700;
+  a {
+    color: #a78bfa;
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
+  a:hover { color: #c4b5fd; }
+
+  strong { font-weight: 700; }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #07071a; }
+  ::-webkit-scrollbar-thumb { background: #5b21b6; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
 `;
 
 const AppContainer = styled.div`
@@ -63,10 +64,17 @@ const MainContent = styled.main`
   z-index: 2;
 `;
 
-const SectionDivider = styled.div`
+/* Very subtle gradient line between sections */
+const Divider = styled.div`
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(124,58,237,0.2), transparent);
-  margin: 0 5%;
+  margin: 0 8%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(124, 58, 237, 0.18) 40%,
+    rgba(6, 182, 212, 0.18) 60%,
+    transparent 100%
+  );
 `;
 
 const App: React.FC = () => {
@@ -78,21 +86,21 @@ const App: React.FC = () => {
         <Navigation />
         <MainContent>
           <Hero />
-          <SectionDivider />
+          <Divider />
           <About />
-          <SectionDivider />
+          <Divider />
           <Skills />
-          <SectionDivider />
+          <Divider />
           <Experience />
-          <SectionDivider />
+          <Divider />
           <Projects />
-          <SectionDivider />
+          <Divider />
           <Achievements />
-          <SectionDivider />
+          <Divider />
           <CodingProfiles />
-          <SectionDivider />
+          <Divider />
           <Extracurricular />
-          <SectionDivider />
+          <Divider />
           <Contact />
           <Footer />
         </MainContent>

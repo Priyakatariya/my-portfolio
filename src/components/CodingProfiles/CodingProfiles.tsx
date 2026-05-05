@@ -1,7 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 import { codingProfiles } from '../../data/codingProfiles';
+
+const shimmer = keyframes`
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+`;
 
 const Section = styled.section`
   padding: 80px 5%;
@@ -14,7 +19,7 @@ const Title = styled(motion.h2)`
   font-weight: 800;
   text-align: center;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #10b981, #38bdf8);
+  background: linear-gradient(135deg, #2dd4bf, #60a5fa, #a78bfa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -22,69 +27,97 @@ const Title = styled(motion.h2)`
 
 const Subtitle = styled(motion.p)`
   text-align: center;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.4);
   margin-bottom: 4rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
-`;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
 
-const Card = styled(motion.a)<{ bgColor: string; borderColor: string }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background: ${({ bgColor }) => bgColor};
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 20px;
-  padding: 2rem 1.5rem;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-  &:hover {
-    transform: translateY(-8px);
-    border-color: ${({ borderColor }) => borderColor};
-    box-shadow: 0 10px 40px ${({ borderColor }) => borderColor}33;
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
   }
 `;
 
-const Emoji = styled.div`
-  font-size: 2.5rem;
-  margin-bottom: 0.8rem;
+const Card = styled(motion.a)<{ borderGlow: string; bgColor: string }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: ${({ bgColor }) => bgColor};
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent, ${({ borderGlow }) => borderGlow}, transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 16px 48px ${({ borderGlow }) => borderGlow};
+    border-color: ${({ borderGlow }) => borderGlow};
+
+    &::before {
+      opacity: 1;
+    }
+  }
 `;
 
-const PlatformName = styled.h3`
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.9);
-  margin: 0 0 0.3rem;
-`;
-
-const Handle = styled.p`
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.38);
-  font-family: 'Fira Code', monospace;
-  margin: 0 0 1rem;
-`;
-
-const Stat = styled.div<{ color: string }>`
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: ${({ color }) => color};
+const IconWrap = styled.div`
+  font-size: 2.4rem;
+  margin-bottom: 0.9rem;
   line-height: 1;
 `;
 
+const PlatformName = styled.h3`
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  margin: 0 0 0.8rem;
+  letter-spacing: 0.01em;
+`;
+
+const StatNum = styled.div<{ color: string }>`
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: ${({ color }) => color};
+  line-height: 1;
+  letter-spacing: -0.02em;
+`;
+
 const StatLabel = styled.p`
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.4);
-  margin: 0.3rem 0 0;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.35);
+  margin: 0.35rem 0 0;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  line-height: 1.4;
 `;
 
 const CodingProfiles: React.FC = () => {
@@ -102,9 +135,9 @@ const CodingProfiles: React.FC = () => {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.15 }}
       >
-        Where I compete, collaborate & contribute
+        Where I compete, contribute &amp; keep building
       </Subtitle>
       <Grid>
         {codingProfiles.map((profile, i) => (
@@ -114,16 +147,15 @@ const CodingProfiles: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             bgColor={profile.bgColor}
-            borderColor={profile.color}
-            initial={{ opacity: 0, scale: 0.85 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            borderGlow={profile.borderGlow}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.1 }}
+            transition={{ duration: 0.4, delay: i * 0.08 }}
           >
-            <Emoji>{profile.emoji}</Emoji>
+            <IconWrap>{profile.icon}</IconWrap>
             <PlatformName>{profile.platform}</PlatformName>
-            <Handle>@{profile.handle}</Handle>
-            <Stat color={profile.color}>{profile.stat}</Stat>
+            <StatNum color={profile.color}>{profile.stat}</StatNum>
             <StatLabel>{profile.statLabel}</StatLabel>
           </Card>
         ))}

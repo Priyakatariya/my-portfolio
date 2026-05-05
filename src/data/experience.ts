@@ -13,7 +13,6 @@ export const experience: ExperienceType[] = [
     title: 'Developer',
     company: 'Alumni Cell Web Team, NIT Kurukshetra',
     duration: 'Oct 2025 – Present',
-    link: '#',
     description: [
       'Contributed to a production-grade alumni portal serving 1000+ users by resolving routing issues and improving system stability.',
       'Implemented role-based authentication and modular components, reducing code redundancy by 40%.',
@@ -37,6 +36,17 @@ export const experience: ExperienceType[] = [
       'Resolved 15+ logic and UI issues across 5+ repositories by analyzing component states and API responses.',
       'Refactored legacy CSS into reusable Tailwind components, improving UI consistency by 20%.',
       'Contributed 15+ merged pull requests, securing Rank 26.',
+    ],
+  },
+  {
+    title: 'Open Source Contributor',
+    company: 'Social Winter of Code (SWoC \'26)',
+    duration: 'Dec 2025 – Feb 2026',
+    description: [
+      'Ranked in the Top 100 contributors globally out of 1000+ participants.',
+      'Got 6+ pull requests merged across 4–5 repositories spanning various tech stacks.',
+      'Fixed critical UI bugs and inconsistencies, improving visual quality and user experience across projects.',
+      'Implemented new features including component enhancements and accessibility improvements.',
     ],
   },
 ];

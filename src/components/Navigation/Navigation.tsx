@@ -10,9 +10,10 @@ const NavWrapper = styled(motion.nav)`
   left: 0;
   width: 100%;
   height: 65px;
-  background: rgba(8, 8, 20, 0.7);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(124,58,237,0.15);
+  background: rgba(7, 7, 18, 0.75);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.12);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,37 +22,39 @@ const NavWrapper = styled(motion.nav)`
   box-sizing: border-box;
 `;
 
-const Logo = styled.div`
-  font-size: 1.5rem;
-  font-weight: 800;
+const Logo = styled(Link)`
+  font-size: 1.45rem;
+  font-weight: 900;
   background: linear-gradient(135deg, #a78bfa, #38bdf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   cursor: pointer;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  text-decoration: none;
 `;
 
 const NavDesktop = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1.8rem;
   align-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     display: none;
   }
 `;
 
 const NavLinkStyled = styled(Link)`
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255, 255, 255, 0.55);
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.25s ease;
-  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+  letter-spacing: 0.03em;
 
-  &:hover {
+  &:hover,
+  &.active {
     color: #a78bfa;
   }
 `;
@@ -60,13 +63,15 @@ const HamburgerBtn = styled.button`
   display: none;
   background: none;
   border: none;
-  color: rgba(255,255,255,0.8);
-  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.35rem;
   cursor: pointer;
   padding: 0;
+  line-height: 1;
 
-  @media (max-width: 768px) {
-    display: block;
+  @media (max-width: 900px) {
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -75,27 +80,30 @@ const MobileMenu = styled(motion.div)`
   top: 65px;
   left: 0;
   right: 0;
-  background: rgba(8, 8, 20, 0.95);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(124,58,237,0.15);
+  background: rgba(7, 7, 18, 0.97);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.12);
   z-index: 999;
-  padding: 1.5rem 5%;
+  padding: 1.2rem 5% 1.8rem;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 0;
 `;
 
 const MobileLink = styled(Link)`
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.65);
   cursor: pointer;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  transition: color 0.2s ease;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: color 0.2s ease, padding-left 0.2s ease;
+  text-decoration: none;
 
   &:hover {
     color: #a78bfa;
+    padding-left: 0.5rem;
   }
 `;
 
@@ -118,34 +126,47 @@ const Navigation: React.FC = () => {
       <NavWrapper
         initial={{ y: -80 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
       >
-        <Logo>Priya.</Logo>
+        <Logo to="home" smooth duration={600} offset={-65}>
+          Priya.
+        </Logo>
+
         <NavDesktop>
           {navItems.map(item => (
-            <NavLinkStyled key={item.name} to={item.to} smooth duration={500} offset={-70}>
+            <NavLinkStyled
+              key={item.name}
+              to={item.to}
+              smooth
+              duration={600}
+              offset={-70}
+              spy
+              activeClass="active"
+            >
               {item.name}
             </NavLinkStyled>
           ))}
         </NavDesktop>
-        <HamburgerBtn onClick={() => setOpen(v => !v)}>
+
+        <HamburgerBtn onClick={() => setOpen(v => !v)} aria-label="Toggle menu">
           {open ? <FaTimes /> : <FaBars />}
         </HamburgerBtn>
       </NavWrapper>
+
       <AnimatePresence>
         {open && (
           <MobileMenu
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18 }}
           >
             {navItems.map(item => (
               <MobileLink
                 key={item.name}
                 to={item.to}
                 smooth
-                duration={500}
+                duration={600}
                 offset={-70}
                 onClick={() => setOpen(false)}
               >

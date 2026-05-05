@@ -2,64 +2,74 @@
 
 export interface CodingProfile {
   platform: string;
-  handle: string;
+  icon: string;
   stat: string;
   statLabel: string;
   link: string;
   color: string;
   bgColor: string;
-  emoji: string;
+  borderGlow: string;
 }
 
 export const codingProfiles: CodingProfile[] = [
   {
     platform: 'LeetCode',
-    handle: 'priyakatariya',
+    icon: '🔥',
     stat: '1805',
-    statLabel: 'Peak Rating',
-    link: 'https://leetcode.com/u/priyakatariya2007/',
+    statLabel: 'Peak Rating · Top 10.1%',
+    link: 'https://leetcode.com/u/priya_-8/',
     color: '#ffa116',
-    bgColor: 'rgba(255,161,22,0.1)',
-    emoji: '🔥',
+    bgColor: 'rgba(255,161,22,0.07)',
+    borderGlow: 'rgba(255,161,22,0.35)',
   },
   {
     platform: 'CodeChef',
-    handle: 'Priyakatariya',
+    icon: '⭐',
     stat: '1725',
-    statLabel: 'Peak Rating',
-    link: 'https://codechef.com',
-    color: '#8b5cf6',
-    bgColor: 'rgba(139,92,246,0.1)',
-    emoji: '⭐',
+    statLabel: 'Peak Rating · 3-Star',
+    link: 'https://www.codechef.com/users/avid_glade_10',
+    color: '#a78bfa',
+    bgColor: 'rgba(167,139,250,0.07)',
+    borderGlow: 'rgba(167,139,250,0.35)',
   },
   {
     platform: 'Codeforces',
-    handle: 'Priyakatariya',
+    icon: '⚡',
     stat: '1305',
-    statLabel: 'Max Rating',
-    link: 'https://codeforces.com',
-    color: '#3b82f6',
-    bgColor: 'rgba(59,130,246,0.1)',
-    emoji: '⚡',
+    statLabel: 'Max Rating · Pupil',
+    link: 'https://codeforces.com/profile/SilentCompiler08',
+    color: '#60a5fa',
+    bgColor: 'rgba(96,165,250,0.07)',
+    borderGlow: 'rgba(96,165,250,0.35)',
+  },
+  {
+    platform: 'GeeksForGeeks',
+    icon: '🌿',
+    stat: '500+',
+    statLabel: 'Problems Solved',
+    link: 'https://www.geeksforgeeks.org/profile/priyakatariya07',
+    color: '#34d399',
+    bgColor: 'rgba(52,211,153,0.07)',
+    borderGlow: 'rgba(52,211,153,0.35)',
   },
   {
     platform: 'GitHub',
-    handle: 'priyakatariya',
-    stat: '3+',
-    statLabel: 'Projects',
-    link: 'https://github.com/priyakatariya',
-    color: '#f0f6fc',
-    bgColor: 'rgba(240,246,252,0.07)',
-    emoji: '🐙',
+    icon: '🐙',
+    stat: '59+',
+    statLabel: 'Repositories',
+    link: 'https://github.com/Priyakatariya',
+    color: '#e2e8f0',
+    bgColor: 'rgba(226,232,240,0.05)',
+    borderGlow: 'rgba(226,232,240,0.2)',
   },
   {
     platform: 'Codolio',
-    handle: 'Priyakatariya',
+    icon: '💡',
     stat: '1700+',
-    statLabel: 'DSA Solved',
+    statLabel: 'DSA Problems Solved',
     link: 'https://codolio.com/profile/Priyakatariya',
-    color: '#10b981',
-    bgColor: 'rgba(16,185,129,0.1)',
-    emoji: '💡',
+    color: '#2dd4bf',
+    bgColor: 'rgba(45,212,191,0.07)',
+    borderGlow: 'rgba(45,212,191,0.35)',
   },
 ];
