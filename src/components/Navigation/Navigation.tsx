@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-scroll';
+import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
@@ -15,14 +15,14 @@ const NavWrapper = styled(motion.nav)`
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(124, 58, 237, 0.12);
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   align-items: center;
   z-index: 1000;
   padding: 0 5%;
   box-sizing: border-box;
 `;
 
-const Logo = styled(Link)`
+const Logo = styled(NavLink)`
   font-size: 1.45rem;
   font-weight: 900;
   background: linear-gradient(135deg, #a78bfa, #38bdf8);
@@ -38,13 +38,15 @@ const NavDesktop = styled.div`
   display: flex;
   gap: 1.8rem;
   align-items: center;
+  margin: 0 auto;
+  transform: translateX(-50px); /* Adjusting for logo width to truly center visually, or we can just leave it */
 
   @media (max-width: 900px) {
     display: none;
   }
 `;
 
-const NavLinkStyled = styled(Link)`
+const NavLinkStyled = styled(NavLink)`
   font-size: 0.88rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.55);
@@ -72,6 +74,7 @@ const HamburgerBtn = styled.button`
   @media (max-width: 900px) {
     display: flex;
     align-items: center;
+    margin-left: auto;
   }
 `;
 
@@ -91,7 +94,7 @@ const MobileMenu = styled(motion.div)`
   gap: 0;
 `;
 
-const MobileLink = styled(Link)`
+const MobileLink = styled(NavLink)`
   font-size: 1rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.65);
@@ -101,21 +104,20 @@ const MobileLink = styled(Link)`
   transition: color 0.2s ease, padding-left 0.2s ease;
   text-decoration: none;
 
-  &:hover {
+  &:hover,
+  &.active {
     color: #a78bfa;
     padding-left: 0.5rem;
   }
 `;
 
 const navItems = [
-  { name: 'About', to: 'about' },
-  { name: 'Skills', to: 'skills' },
-  { name: 'Experience', to: 'experience' },
-  { name: 'Projects', to: 'projects' },
-  { name: 'Achievements', to: 'achievements' },
-  { name: 'Profiles', to: 'coding-profiles' },
-  { name: 'Extras', to: 'extracurricular' },
-  { name: 'Contact', to: 'contact' },
+  { name: 'Home', to: '/' },
+  { name: 'Experience', to: '/experience' },
+  { name: 'Projects', to: '/projects' },
+  { name: 'Skills', to: '/skills' },
+  { name: 'Certificates', to: '/certificates' },
+  { name: 'Extras', to: '/extras' },
 ];
 
 const Navigation: React.FC = () => {
@@ -126,22 +128,15 @@ const Navigation: React.FC = () => {
       <NavWrapper
         initial={{ y: -80 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        transition={{ duration: 0.5, ease: 'easeOut' as const }}
       >
-        <Logo to="home" smooth duration={600} offset={-65}>
-          Priya.
-        </Logo>
+        <Logo to="/">Priya.</Logo>
 
         <NavDesktop>
           {navItems.map(item => (
             <NavLinkStyled
               key={item.name}
               to={item.to}
-              smooth
-              duration={600}
-              offset={-70}
-              spy
-              activeClass="active"
             >
               {item.name}
             </NavLinkStyled>
@@ -165,9 +160,6 @@ const Navigation: React.FC = () => {
               <MobileLink
                 key={item.name}
                 to={item.to}
-                smooth
-                duration={600}
-                offset={-70}
                 onClick={() => setOpen(false)}
               >
                 {item.name}

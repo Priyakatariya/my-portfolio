@@ -9,7 +9,7 @@ const ParticleBackground: React.FC = () => {
     await loadSlim(engine);
   }, []);
 
-  const particlesLoaded = useCallback(async (container: any) => {
+  const particlesLoaded = useCallback(async (_container: any) => {
     // Optional: Do something when particles are loaded
   }, []);
 

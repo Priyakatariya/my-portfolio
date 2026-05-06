@@ -1,12 +1,7 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { codingProfiles } from '../../data/codingProfiles';
-
-const shimmer = keyframes`
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-`;
 
 const Section = styled.section`
   padding: 80px 5%;

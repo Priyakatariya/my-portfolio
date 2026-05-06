@@ -1,159 +1,156 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { skills } from '../../data/skills';
 
-type Category = 'All' | 'Languages' | 'Frameworks' | 'Databases' | 'Tools';
-
-const Section = styled.section`
-  padding: 80px 5%;
-  max-width: 1100px;
+const SkillsContainer = styled.div`
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 4rem 5%;
 `;
 
-const Title = styled(motion.h2)`
-  font-size: 2.8rem;
+const Title = styled.h2`
+  font-size: 3rem;
   font-weight: 800;
+  margin-bottom: 4rem;
   text-align: center;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  background: linear-gradient(135deg, #10b981, #3b82f6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 `;
 
-const Subtitle = styled(motion.p)`
-  text-align: center;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 2.5rem;
-  font-size: 1.1rem;
+const SkillsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
 `;
 
-const FilterBar = styled.div`
+const SkillCategory = styled(motion.div)`
+  background: rgba(10, 15, 20, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2);
+    transform: translateY(-5px);
+  }
+`;
+
+const CategoryTitle = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.5rem;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #10b981;
+  }
+`;
+
+const BadgesContainer = styled.div`
+  display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  margin-bottom: 3rem;
 `;
 
-const FilterBtn = styled.button<{ active: boolean }>`
-  padding: 0.5rem 1.4rem;
-  border-radius: 999px;
-  border: 1px solid ${({ active }) => active ? '#7c3aed' : 'rgba(255,255,255,0.12)'};
-  background: ${({ active }) => active ? 'rgba(124,58,237,0.25)' : 'rgba(255,255,255,0.04)'};
-  color: ${({ active }) => active ? '#a78bfa' : 'rgba(255,255,255,0.55)'};
-  font-size: 0.9rem;
+const Badge = styled(motion.span)`
+  font-size: 0.95rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  font-family: inherit;
-
-  &:hover {
-    border-color: #7c3aed;
-    color: #a78bfa;
-  }
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 1.2rem;
-`;
-
-const SkillCard = styled(motion.div)<{ color: string }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 1.2rem 0.8rem;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: default;
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-
+  transition: all 0.2s ease;
+  
   &:hover {
-    transform: translateY(-5px);
-    border-color: ${({ color }) => color};
-    background: rgba(255,255,255,0.08);
-  }
-
-  &:hover svg, &:hover .icon {
-    filter: drop-shadow(0 0 8px ${({ color }) => color});
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.4);
   }
 `;
 
-const IconWrapper = styled.div<{ color: string }>`
-  font-size: 2.2rem;
-  color: ${({ color }) => color};
-  transition: filter 0.25s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+const skillCategories = [
+  {
+    title: "Languages",
+    skills: ["C", "C++", "Python", "Java", "JavaScript", "SQL"]
+  },
+  {
+    title: "Frameworks & Libraries",
+    skills: ["React.js", "Next.js", "Node.js", "Express.js", "Tailwind CSS"]
+  },
+  {
+    title: "Databases",
+    skills: ["MySQL", "MongoDB", "Firebase (Firestore)"]
+  },
+  {
+    title: "Tools & Platforms",
+    skills: ["Git", "GitHub", "VS Code", "Docker", "Postman", "Vercel"]
+  },
+  {
+    title: "Soft Skills",
+    skills: ["Problem Solving", "Project Management", "Teamwork", "Communication", "Adaptability", "Work Ethic", "Leadership"]
+  }
+];
 
-const SkillName = styled.p`
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.7);
-  text-align: center;
-  margin: 0;
-  font-weight: 500;
-`;
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
-const CATEGORIES: Category[] = ['All', 'Languages', 'Frameworks', 'Databases', 'Tools'];
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
 
 const Skills: React.FC = () => {
-  const [active, setActive] = useState<Category>('All');
-
-  const filtered = active === 'All' ? skills : skills.filter(s => s.type === active);
-
   return (
-    <Section id="skills">
-      <Title
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+    <SkillsContainer>
+      <Title>Technical Skills</Title>
+      <SkillsGrid
+        as={motion.div}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
       >
-        Technical Skills
-      </Title>
-      <Subtitle
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.15 }}
-      >
-        Languages, frameworks, databases & tools I work with
-      </Subtitle>
-      <FilterBar>
-        {CATEGORIES.map(cat => (
-          <FilterBtn key={cat} active={active === cat} onClick={() => setActive(cat)}>
-            {cat}
-          </FilterBtn>
+        {skillCategories.map((category, index) => (
+          <SkillCategory key={index} variants={itemVariants}>
+            <CategoryTitle>{category.title}</CategoryTitle>
+            <BadgesContainer>
+              {category.skills.map((skill, i) => (
+                <Badge
+                  key={i}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {skill}
+                </Badge>
+              ))}
+            </BadgesContainer>
+          </SkillCategory>
         ))}
-      </FilterBar>
-      <Grid>
-        {filtered.map((skill, i) => {
-          const Icon = skill.icon;
-          return (
-            <SkillCard
-              key={skill.name}
-              color={skill.color}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: i * 0.04 }}
-            >
-              <IconWrapper color={skill.color}>
-                <Icon />
-              </IconWrapper>
-              <SkillName>{skill.name}</SkillName>
-            </SkillCard>
-          );
-        })}
-      </Grid>
-    </Section>
+      </SkillsGrid>
+    </SkillsContainer>
   );
 };
 

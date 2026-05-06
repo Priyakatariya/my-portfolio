@@ -1,192 +1,221 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { experience } from '../../data/experience';
 
-const Section = styled.section`
-  padding: 80px 5%;
-  max-width: 1100px;
+const ExperienceContainer = styled.div`
+  max-width: 1000px;
   margin: 0 auto;
+  padding: 4rem 5%;
 `;
 
-const Title = styled(motion.h2)`
-  font-size: 2.8rem;
+const Title = styled.h2`
+  font-size: 3rem;
   font-weight: 800;
+  margin-bottom: 3rem;
   text-align: center;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #06b6d4, #7c3aed);
+  background: linear-gradient(135deg, #06b6d4, #38bdf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 `;
 
-const Subtitle = styled(motion.p)`
-  text-align: center;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 4rem;
-  font-size: 1.1rem;
-`;
-
 const Timeline = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(6, 182, 212, 0.5), rgba(56, 189, 248, 0.1));
+    
+    @media (max-width: 768px) {
+      left: 10px;
+    }
+  }
+`;
+
+const TimelineItem = styled(motion.div)`
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 3rem;
+  
+  @media (max-width: 768px) {
+    padding-left: 40px;
+  }
 
   &::before {
     content: '';
     position: absolute;
-    left: 18px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(180deg, #7c3aed, #06b6d4, transparent);
-    border-radius: 2px;
-  }
-
-  @media (max-width: 768px) {
-    &::before { display: none; }
-  }
-`;
-
-const Dot = styled.div`
-  position: absolute;
-  left: 10px;
-  top: 2rem;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #7c3aed, #06b6d4);
-  box-shadow: 0 0 12px rgba(124,58,237,0.5);
-  z-index: 1;
-
-  @media (max-width: 768px) {
-    display: none;
+    left: 14px;
+    top: 8px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #06b6d4;
+    box-shadow: 0 0 10px #06b6d4, 0 0 20px #06b6d4;
+    
+    @media (max-width: 768px) {
+      left: 4px;
+    }
   }
 `;
 
-const CardWrapper = styled.div`
-  position: relative;
-  padding-left: 50px;
-
-  @media (max-width: 768px) {
-    padding-left: 0;
-  }
-`;
-
-const Card = styled(motion.div)`
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
+const Card = styled.div`
+  background: rgba(10, 10, 25, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 182, 212, 0.2);
   border-radius: 16px;
-  padding: 1.8rem 2rem;
-  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
-
+  padding: 2rem;
+  transition: all 0.3s ease;
+  
   &:hover {
-    transform: translateX(6px);
-    border-color: rgba(124,58,237,0.4);
-    background: rgba(255,255,255,0.06);
+    border-color: rgba(6, 182, 212, 0.5);
+    box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.3);
+    transform: translateY(-5px);
   }
 `;
 
-const JobTitle = styled.h3`
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.95);
-  margin: 0 0 0.4rem;
-`;
-
-const Meta = styled.div`
+const RoleHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+  align-items: flex-start;
   margin-bottom: 1rem;
+  
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 `;
 
-const Company = styled.span`
+const Role = styled.h3`
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  
+  span {
+    color: #06b6d4;
+  }
+`;
+
+const DateText = styled.div`
   font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 600;
-  color: #7c3aed;
-  background: rgba(124,58,237,0.12);
-  padding: 0.2rem 0.8rem;
-  border-radius: 999px;
+  background: rgba(6, 182, 212, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
 `;
 
-const Duration = styled.span`
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.38);
-  font-family: 'Fira Code', monospace;
+const Company = styled.h4`
+  font-size: 1.1rem;
+  color: #a78bfa;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
 `;
 
-const BulletList = styled.ul`
-  list-style: none;
+const List = styled.ul`
+  list-style-type: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 `;
 
-const Bullet = styled.li`
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.65);
+const ListItem = styled.li`
+  margin-bottom: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
   line-height: 1.6;
-  padding-left: 1.2rem;
   position: relative;
-
+  padding-left: 1.5rem;
+  
   &::before {
     content: '▹';
     position: absolute;
     left: 0;
     color: #06b6d4;
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  strong {
+    color: #fff;
+    font-weight: 600;
   }
 `;
 
+const experiences = [
+  {
+    role: "Developer",
+    company: "Alumni Cell Web Team, NIT Kurukshetra",
+    date: "Oct 2025 – Present",
+    details: [
+      "Contributed to a production-grade alumni portal serving <strong>1000+ users</strong> by resolving routing issues and improving system stability.",
+      "Implemented role-based authentication and modular components, reducing <strong>code redundancy by 40%</strong>.",
+      "Increased Lighthouse performance scores from <strong>65 to 85+</strong> through optimized rendering and state management."
+    ]
+  },
+  {
+    role: "Mentor",
+    company: "GirlScript Summer of Code (GSSoC '25)",
+    date: "Jul 2025 – Oct 2025",
+    details: [
+      "Mentored <strong>25+ developers</strong>, improving pull request quality and reducing review cycles.",
+      "Reviewed <strong>100+ pull requests</strong>, ensuring proper edge-case handling and scalable architecture."
+    ]
+  },
+  {
+    role: "Open Source Contributor",
+    company: "Social Summer of Code (SSoC '25)",
+    date: "Jun 2025 – Aug 2025",
+    details: [
+      "Resolved <strong>15+ logic and UI issues</strong> across <strong>5+ repositories</strong> by analyzing component states and API responses.",
+      "Refactored legacy CSS into reusable Tailwind components, improving UI consistency by <strong>20%</strong>.",
+      "Contributed <strong>15+ merged pull requests</strong>, securing <strong>Rank 26 among 1000+ contributors</strong>."
+    ]
+  },
+  {
+    role: "Open Source Contributor",
+    company: "Social Winter of Code (SWoC '26)",
+    date: "Dec 2025 – Present",
+    details: [
+      "Resolved <strong>6+ merged issues</strong>, fixing UI and functionality bugs, and implementing new features to improve overall project performance and user experience.",
+      "Collaborated with developers across different teams, analyzed real-world project requirements, and contributed scalable solutions through clean and maintainable code.",
+      "Enhanced application stability, responsiveness, and feature usability."
+    ]
+  }
+];
+
 const Experience: React.FC = () => {
   return (
-    <Section id="experience">
-      <Title
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        Experience
-      </Title>
-      <Subtitle
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.15 }}
-      >
-        Open source, mentoring & real-world development
-      </Subtitle>
+    <ExperienceContainer>
+      <Title>Experience</Title>
       <Timeline>
-        {experience.map((job, i) => (
-          <CardWrapper key={i}>
-            <Dot />
-            <Card
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-            >
-              <JobTitle>{job.title}</JobTitle>
-              <Meta>
-                <Company>{job.company}</Company>
-                <Duration>{job.duration}</Duration>
-              </Meta>
-              <BulletList>
-                {job.description.map((pt, j) => (
-                  <Bullet key={j}>{pt}</Bullet>
+        {experiences.map((exp, index) => (
+          <TimelineItem
+            key={index}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: index * 0.2 }}
+          >
+            <Card>
+              <RoleHeader>
+                <Role>{exp.role}</Role>
+                <DateText>{exp.date}</DateText>
+              </RoleHeader>
+              <Company>{exp.company}</Company>
+              <List>
+                {exp.details.map((detail, i) => (
+                  <ListItem key={i} dangerouslySetInnerHTML={{ __html: detail }} />
                 ))}
-              </BulletList>
+              </List>
             </Card>
-          </CardWrapper>
+          </TimelineItem>
         ))}
       </Timeline>
-    </Section>
+    </ExperienceContainer>
   );
 };
 

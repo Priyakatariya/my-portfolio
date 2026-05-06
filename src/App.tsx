@@ -1,17 +1,18 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
+import { AnimatePresence } from 'framer-motion';
 import ThreeBackground from './components/ParticleBackground/ThreeBackground';
 import Navigation from './components/Navigation/Navigation';
-import Hero from './components/Hero/Hero';
-import About from './components/About/About';
-import Skills from './components/Skills/Skills';
-import Experience from './components/Experience/Experience';
-import Projects from './components/Projects/Projects';
-import Achievements from './components/Achievements/Achievements';
-import CodingProfiles from './components/CodingProfiles/CodingProfiles';
-import Extracurricular from './components/Extracurricular/Extracurricular';
-import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+
+// Pages
+import Home from './pages/Home';
+import Experience from './pages/Experience';
+import Projects from './pages/Projects';
+import Skills from './pages/Skills';
+import Certificates from './pages/Certificates';
+import Extras from './pages/Extras';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -33,7 +34,6 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
   }
 
-  /* Uniform section spacing — no section backgrounds, just consistent dark */
   section {
     position: relative;
     z-index: 2;
@@ -62,50 +62,41 @@ const AppContainer = styled.div`
 const MainContent = styled.main`
   position: relative;
   z-index: 2;
+  padding-top: 65px; /* Leave space for fixed navbar */
 `;
 
-/* Very subtle gradient line between sections */
-const Divider = styled.div`
-  height: 1px;
-  margin: 0 8%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(124, 58, 237, 0.18) 40%,
-    rgba(6, 182, 212, 0.18) 60%,
-    transparent 100%
+const AppRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <>
+      <ThreeBackground location={location.pathname} />
+      <Navigation />
+      <MainContent>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="/experience" element={<Experience />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/skills" element={<Skills />} />
+            <Route path="/certificates" element={<Certificates />} />
+            <Route path="/extras" element={<Extras />} />
+          </Routes>
+        </AnimatePresence>
+        <Footer />
+      </MainContent>
+    </>
   );
-`;
+};
 
 const App: React.FC = () => {
   return (
-    <>
+    <Router>
       <GlobalStyle />
       <AppContainer>
-        <ThreeBackground />
-        <Navigation />
-        <MainContent>
-          <Hero />
-          <Divider />
-          <About />
-          <Divider />
-          <Skills />
-          <Divider />
-          <Experience />
-          <Divider />
-          <Projects />
-          <Divider />
-          <Achievements />
-          <Divider />
-          <CodingProfiles />
-          <Divider />
-          <Extracurricular />
-          <Divider />
-          <Contact />
-          <Footer />
-        </MainContent>
+        <AppRoutes />
       </AppContainer>
-    </>
+    </Router>
   );
 };
 

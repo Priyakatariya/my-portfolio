@@ -1,136 +1,118 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { achievements } from '../../data/achievements';
+import { FaTrophy, FaCode, FaStar, FaMedal } from 'react-icons/fa';
 
-const pulse = keyframes`
-  0%, 100% { box-shadow: 0 0 0 0 rgba(124,58,237,0.4); }
-  50% { box-shadow: 0 0 20px 8px rgba(124,58,237,0.15); }
-`;
-
-const Section = styled.section`
-  padding: 80px 5%;
-  max-width: 1100px;
+const Container = styled.div`
+  max-width: 1000px;
   margin: 0 auto;
+  padding: 0 5%;
 `;
 
-const Title = styled(motion.h2)`
-  font-size: 2.8rem;
+const Title = styled.h2`
+  font-size: 2.5rem;
   font-weight: 800;
+  margin-bottom: 3rem;
   text-align: center;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #a855f7, #38bdf8);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 `;
 
-const Subtitle = styled(motion.p)`
-  text-align: center;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 4rem;
-  font-size: 1.1rem;
-`;
-
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 `;
 
-const Card = styled(motion.div)<{ color: string }>`
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
+const Card = styled(motion.div)`
+  background: rgba(20, 20, 30, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(251, 191, 36, 0.2);
   border-radius: 16px;
   padding: 2rem;
   display: flex;
-  gap: 1.2rem;
   align-items: flex-start;
-  cursor: default;
-  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-  animation: ${pulse} 3s ease infinite;
-
+  gap: 1.5rem;
+  
   &:hover {
-    transform: translateY(-6px);
-    border-color: ${({ color }) => color};
-    background: rgba(255,255,255,0.07);
+    border-color: rgba(251, 191, 36, 0.5);
+    transform: translateY(-5px);
   }
 `;
 
-const Badge = styled.div`
+const IconWrapper = styled.div`
   font-size: 2.5rem;
-  min-width: 50px;
-  text-align: center;
+  color: #fbbf24;
 `;
 
-const Info = styled.div`
-  flex: 1;
+const Content = styled.div`
+  h3 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    strong {
+      color: #fff;
+    }
+  }
 `;
 
-const Platform = styled.p`
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.4);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin: 0 0 0.3rem;
-`;
-
-const Stat = styled.h3<{ color: string }>`
-  font-size: 2rem;
-  font-weight: 800;
-  color: ${({ color }) => color};
-  margin: 0 0 0.4rem;
-`;
-
-const Description = styled.p`
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.65);
-  margin: 0;
-  line-height: 1.5;
-`;
+const achievements = [
+  {
+    icon: <FaTrophy />,
+    title: "Social Winter of Code (SWoC '26)",
+    desc: "Ranked among <strong>Top 100 contributors</strong> globally."
+  },
+  {
+    icon: <FaCode />,
+    title: "LeetCode",
+    desc: "Peak rating <strong>1805</strong> (Top 10.1% globally)."
+  },
+  {
+    icon: <FaStar />,
+    title: "CodeChef",
+    desc: "3-Star coder (Peak Rating: <strong>1725</strong>); secured Global Rank 203 in Starters 213 and 254 in Starters 215."
+  },
+  {
+    icon: <FaMedal />,
+    title: "Codeforces",
+    desc: "Pupil with a maximum rating of <strong>1305</strong>."
+  },
+  {
+    icon: <FaCode />,
+    title: "Competitive Programming",
+    desc: "Solved <strong>1700+ DSA problems</strong> across competitive programming platforms."
+  }
+];
 
 const Achievements: React.FC = () => {
   return (
-    <Section id="achievements">
-      <Title
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        Achievements
-      </Title>
-      <Subtitle
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      >
-        Competitive programming & open source milestones
-      </Subtitle>
+    <Container>
+      <Title>Achievements</Title>
       <Grid>
-        {achievements.map((a, i) => (
+        {achievements.map((item, i) => (
           <Card
             key={i}
-            color={a.color}
-            href={a.link}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            as={a.link !== '#' ? 'a' : 'div'}
-            {...(a.link !== '#' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            transition={{ delay: i * 0.1 }}
           >
-            <Badge>{a.badge}</Badge>
-            <Info>
-              <Platform>{a.platform}</Platform>
-              <Stat color={a.color}>{a.stat}</Stat>
-              <Description>{a.description}</Description>
-            </Info>
+            <IconWrapper>{item.icon}</IconWrapper>
+            <Content>
+              <h3>{item.title}</h3>
+              <p dangerouslySetInnerHTML={{ __html: item.desc }} />
+            </Content>
           </Card>
         ))}
       </Grid>
-    </Section>
+    </Container>
   );
 };
 
