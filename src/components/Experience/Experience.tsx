@@ -9,9 +9,9 @@ const ExperienceContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 800;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
   text-align: center;
   background: linear-gradient(135deg, #06b6d4, #38bdf8);
   -webkit-background-clip: text;
@@ -83,9 +83,10 @@ const RoleHeader = styled.div`
   align-items: flex-start;
   margin-bottom: 1rem;
   
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     flex-direction: column;
-    gap: 0.5rem;
+    align-items: flex-start;
+    gap: 0.8rem;
   }
 `;
 

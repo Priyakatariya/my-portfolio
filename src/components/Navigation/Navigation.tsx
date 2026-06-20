@@ -41,7 +41,7 @@ const NavDesktop = styled.div`
   margin: 0 auto;
   transform: translateX(-50px); /* Adjusting for logo width to truly center visually, or we can just leave it */
 
-  @media (max-width: 900px) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
@@ -71,7 +71,7 @@ const HamburgerBtn = styled.button`
   padding: 0;
   line-height: 1;
 
-  @media (max-width: 900px) {
+  @media (max-width: 768px) {
     display: flex;
     align-items: center;
     margin-left: auto;

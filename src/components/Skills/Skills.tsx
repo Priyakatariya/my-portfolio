@@ -9,9 +9,9 @@ const SkillsContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 800;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   text-align: center;
   background: linear-gradient(135deg, #10b981, #3b82f6);
   -webkit-background-clip: text;
@@ -22,7 +22,12 @@ const Title = styled.h2`
 const SkillsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
+  gap: 2rem;
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 `;
 
 const SkillCategory = styled(motion.div)`
@@ -86,24 +91,24 @@ const Badge = styled(motion.span)`
 
 const skillCategories = [
   {
-    title: "Languages",
-    skills: ["C", "C++", "Python", "Java", "JavaScript", "SQL"]
+    title: "Programming Languages",
+    skills: ["C/C++", "Python", "JavaScript", "TypeScript", "SQL"]
   },
   {
     title: "Frameworks & Libraries",
-    skills: ["React.js", "Next.js", "Node.js", "Express.js", "Tailwind CSS"]
+    skills: ["React.js", "Next.js", "Node.js", "Express.js", "Tailwind CSS", "Scikit-learn", "Pandas", "NumPy"]
   },
   {
     title: "Databases",
-    skills: ["MySQL", "MongoDB", "Firebase (Firestore)"]
+    skills: ["MongoDB", "Firebase", "MySQL"]
   },
   {
-    title: "Tools & Platforms",
-    skills: ["Git", "GitHub", "VS Code", "Docker", "Postman", "Vercel"]
+    title: "Tools & Technologies",
+    skills: ["Git", "GitHub", "Docker", "Postman", "VS Code", "Vercel", "XGBoost"]
   },
   {
-    title: "Soft Skills",
-    skills: ["Problem Solving", "Project Management", "Teamwork", "Communication", "Adaptability", "Work Ethic", "Leadership"]
+    title: "Core Concepts",
+    skills: ["Data Structures & Algorithms", "Machine Learning", "Deep Learning", "OOP", "DBMS", "Operating Systems", "Computer Networks"]
   }
 ];
 

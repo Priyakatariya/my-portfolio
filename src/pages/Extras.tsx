@@ -1,8 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { FaTrophy, FaCode, FaMedal, FaHeart, FaEdit } from 'react-icons/fa';
-import { SiLeetcode, SiCodechef, SiCodeforces, SiGithub } from 'react-icons/si';
+import { FaTrophy, FaCode, FaMedal, FaHeart, FaEdit, FaStar } from 'react-icons/fa';
 
 // ── Wrapper ────────────────────────────────────────────────────────────────
 const PageWrapper = styled(motion.div)`
@@ -30,77 +29,7 @@ const SectionTitle = styled(motion.h2)`
   }
 `;
 
-// ── CODING STATS ───────────────────────────────────────────────────────────
-const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 5rem;
-`;
 
-const StatCard = styled(motion.a)<{ accent: string }>`
-  background: rgba(10, 10, 20, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 1.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  backdrop-filter: blur(12px);
-  cursor: pointer;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, ${({ accent }) => accent}18, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  &:hover {
-    border-color: ${({ accent }) => accent}60;
-    transform: translateY(-6px);
-    box-shadow: 0 12px 40px ${({ accent }) => accent}25;
-    &::before { opacity: 1; }
-  }
-`;
-
-const StatIcon = styled.div<{ accent: string }>`
-  font-size: 2rem;
-  color: ${({ accent }) => accent};
-`;
-
-const StatNum = styled.div<{ accent: string }>`
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: ${({ accent }) => accent};
-  letter-spacing: -0.02em;
-`;
-
-const StatLabel = styled.div`
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-`;
-
-const StatSub = styled.div`
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.4);
-`;
-
-const codingStats = [
-  { icon: <SiLeetcode />, label: 'LeetCode', stat: '1805', sub: 'Peak Rating · Top 10.1%', accent: '#f59e0b', href: 'https://leetcode.com' },
-  { icon: <SiCodechef />, label: 'CodeChef', stat: '1725', sub: 'Peak Rating · 3-Star', accent: '#d97706', href: 'https://codechef.com' },
-  { icon: <SiCodeforces />, label: 'Codeforces', stat: '1305', sub: 'Max Rating · Pupil', accent: '#3b82f6', href: 'https://codeforces.com' },
-  { icon: <FaCode />, label: 'DSA Problems', stat: '1700+', sub: 'Solved across platforms', accent: '#10b981', href: '#' },
-  { icon: <FaTrophy />, label: 'SWoC \'26', stat: 'Top 100', sub: 'Global Rank · Open Source', accent: '#a78bfa', href: '#' },
-  { icon: <SiGithub />, label: 'SSoC Rank', stat: '#26', sub: 'Among 1000+ contributors', accent: '#6366f1', href: 'https://github.com/priyakatariya' },
-];
 
 // ── ACHIEVEMENTS ───────────────────────────────────────────────────────────
 const AchievementsSection = styled.div`
@@ -125,9 +54,20 @@ const AchievementItem = styled(motion.div)<{ accent: string }>`
   backdrop-filter: blur(10px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
   &:hover {
     transform: translateX(10px);
     box-shadow: -4px 0 0 ${({ accent }) => accent}, 0 8px 30px rgba(0,0,0,0.3);
+    
+    @media (max-width: 768px) {
+      transform: translateY(-5px);
+    }
   }
 `;
 
@@ -143,13 +83,7 @@ const AchText = styled.div`
   p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 `;
 
-const achievements = [
-  { icon: <FaTrophy />, accent: '#fbbf24', title: 'Social Winter of Code (SWoC \'26)', desc: 'Ranked among <strong>Top 100 contributors</strong> globally.' },
-  { icon: <SiLeetcode />, accent: '#f59e0b', title: 'LeetCode — Peak Rating 1805', desc: '<strong>Top 10.1% globally</strong>. Consistent problem solver with focus on graphs, DP, and systems.' },
-  { icon: <SiCodechef />, accent: '#d97706', title: 'CodeChef — 3-Star (Peak: 1725)', desc: 'Secured <strong>Global Rank 203</strong> in Starters 213 and <strong>254</strong> in Starters 215.' },
-  { icon: <SiCodeforces />, accent: '#3b82f6', title: 'Codeforces — Pupil (Max: 1305)', desc: 'Actively competing in rated rounds, focusing on combinatorics and greedy problems.' },
-  { icon: <FaMedal />, accent: '#10b981', title: '1700+ DSA Problems Solved', desc: 'Across <strong>LeetCode, CodeChef, Codeforces, and HackerRank</strong> competitive platforms.' },
-];
+// achievements will be loaded dynamically inside the Extras component
 
 // ── EXTRACURRICULAR ────────────────────────────────────────────────────────
 const ExtrasSection = styled.div``;
@@ -158,6 +92,11 @@ const ExtrasGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const ExtraCard = styled(motion.div)<{ accent: string }>`
@@ -253,6 +192,45 @@ const Divider = styled.div<{ color: string }>`
 
 // ── Page ───────────────────────────────────────────────────────────────────
 const Extras: React.FC = () => {
+  const dynamicAchievements = [
+    {
+      icon: <FaCode />,
+      accent: '#10b981',
+      title: 'Problem Solving',
+      desc: 'Solved <strong>1800+ DSA problems</strong> across multiple coding platforms.'
+    },
+    {
+      icon: <FaMedal />,
+      accent: '#f59e0b',
+      title: 'LeetCode',
+      desc: 'Achieved the <strong>Knight</strong> badge with a peak contest rating of <strong>1876</strong>.'
+    },
+    {
+      icon: <FaStar />,
+      accent: '#d97706',
+      title: 'CodeChef',
+      desc: 'Attained <strong>3-Star</strong> status with a peak rating of <strong>1725</strong>; secured Global Ranks 192, 203, and 931.'
+    },
+    {
+      icon: <FaMedal />,
+      accent: '#3b82f6',
+      title: 'Codeforces',
+      desc: 'Achieved the <strong>Specialist</strong> title with a peak rating of <strong>1430</strong>.'
+    },
+    {
+      icon: <FaTrophy />,
+      accent: '#fbbf24',
+      title: "Social Winter of Code (SWoC '26)",
+      desc: "Secured <strong>Rank 51</strong> globally in the open source program."
+    },
+    {
+      icon: <FaTrophy />,
+      accent: '#6366f1',
+      title: "Social Summer of Code (SSoC '25)",
+      desc: "Secured <strong>Rank 26</strong> globally among 1000+ contributors."
+    }
+  ];
+
   return (
     <PageWrapper
       initial={{ opacity: 0, y: 20 }}
@@ -260,36 +238,6 @@ const Extras: React.FC = () => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Coding Stats */}
-      <SectionTitle
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.1 }}
-        style={{ color: '#f59e0b' }}
-      >
-        🏆 Coding Stats
-      </SectionTitle>
-      <StatsGrid>
-        {codingStats.map((s, i) => (
-          <StatCard
-            key={i}
-            href={s.href}
-            target="_blank"
-            rel="noreferrer"
-            accent={s.accent}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 + i * 0.08 }}
-          >
-            <StatIcon accent={s.accent}>{s.icon}</StatIcon>
-            <StatNum accent={s.accent}>{s.stat}</StatNum>
-            <StatLabel>{s.label}</StatLabel>
-            <StatSub>{s.sub}</StatSub>
-          </StatCard>
-        ))}
-      </StatsGrid>
-
-      <Divider color="#fbbf24" />
 
       {/* Achievements */}
       <AchievementsSection>
@@ -302,7 +250,7 @@ const Extras: React.FC = () => {
           🎖️ Achievements
         </SectionTitle>
         <AchievementList>
-          {achievements.map((item, i) => (
+          {dynamicAchievements.map((item, i) => (
             <AchievementItem
               key={i}
               accent={item.accent}

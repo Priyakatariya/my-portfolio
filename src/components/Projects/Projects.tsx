@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { projects } from '../../data/projects';
+
 
 const ProjectsContainer = styled.div`
   max-width: 1200px;
@@ -10,9 +12,9 @@ const ProjectsContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 800;
-  margin-bottom: 4rem;
+  margin-bottom: 3.5rem;
   text-align: center;
   background: linear-gradient(135deg, #ec4899, #8b5cf6);
   -webkit-background-clip: text;
@@ -22,8 +24,13 @@ const Title = styled.h2`
 
 const ProjectsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 `;
 
 const ProjectCard = styled(motion.div)`
@@ -39,38 +46,6 @@ const ProjectCard = styled(motion.div)`
   &:hover {
     border-color: rgba(236, 72, 153, 0.5);
     box-shadow: 0 15px 40px -10px rgba(236, 72, 153, 0.25);
-  }
-`;
-
-const CardImagePlaceholder = styled.div`
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(45deg, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.2);
-  font-size: 1.5rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  position: relative;
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-
-  ${ProjectCard}:hover &::after {
-    opacity: 1;
-    transform: rotate(30deg);
   }
 `;
 
@@ -154,43 +129,8 @@ const ProjectDescription = styled.ul`
   }
 `;
 
-const projects = [
-  {
-    title: "MindEase – Mental Health Platform",
-    subtitle: "(Team Leader)",
-    tech: ["React.js", "TypeScript", "Firebase", "Tailwind CSS", "Chart.js"],
-    details: [
-      "Led the development of a role-based platform with secure authentication and protected routes.",
-      "Built an anonymous community forum and appointment booking system for mentor and psychologist sessions.",
-      "Developed a Mood Tracker with visual analytics dashboards."
-    ],
-    github: "#",
-    live: "#"
-  },
-  {
-    title: "AstroMedia – Interactive Space Archive",
-    subtitle: "",
-    tech: ["React.js (Vite)", "React Router DOM", "Tailwind CSS", "React Spring"],
-    details: [
-      "Engineered a dynamic Single-Page Application (SPA) with reusable components and seamless client-side routing.",
-      "Integrated physics-based animations and a particle background to enhance UI engagement.",
-      "Optimized build performance using Vite for faster rendering."
-    ],
-    github: "#",
-    live: "#"
-  },
-  {
-    title: "AgriChain – Blockchain Supply Chain",
-    subtitle: "",
-    tech: ["Next.js", "Node.js", "Solidity", "MongoDB"],
-    details: [
-      "Developed a decentralized platform with JWT authentication and role-based access control.",
-      "Integrated Ethereum smart contracts to ensure tamper-proof transactions."
-    ],
-    github: "#",
-    live: "#"
-  }
-];
+// Use data from src/data/projects.ts
+
 
 const Projects: React.FC = () => {
   return (
@@ -206,7 +146,6 @@ const Projects: React.FC = () => {
             transition={{ duration: 0.5, delay: index * 0.15 }}
             whileHover={{ y: -10 }}
           >
-            <CardImagePlaceholder>{project.title.split(' ')[0]}</CardImagePlaceholder>
             <CardContent>
               <ProjectHeader>
                 <ProjectTitle>
@@ -214,25 +153,30 @@ const Projects: React.FC = () => {
                   <span style={{ fontSize: '1rem', color: '#8b5cf6', fontWeight: 500 }}>{project.subtitle}</span>
                 </ProjectTitle>
                 <ProjectLinks>
-                  <a href={project.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+                  <a href={project.githubLink} target="_blank" rel="noreferrer" aria-label="GitHub">
                     <FaGithub />
                   </a>
-                  <a href={project.live} target="_blank" rel="noreferrer" aria-label="Live Demo">
+                  <a href={project.liveLink} target="_blank" rel="noreferrer" aria-label="Live Demo">
                     <FaExternalLinkAlt />
                   </a>
                 </ProjectLinks>
               </ProjectHeader>
               <TechStack>
-                {project.tech.map((tech, i) => (
+                {project.technologies.map((tech, i) => (
                   <TechBadge key={i}>{tech}</TechBadge>
                 ))}
               </TechStack>
               <ProjectDescription>
-                {project.details.map((detail, i) => (
-                  <li key={i}>{detail}</li>
-                ))}
+                {project.highlights ? (
+                  project.highlights.map((detail, i) => (
+                    <li key={i}>{detail}</li>
+                  ))
+                ) : (
+                  <li>{project.description}</li>
+                )}
               </ProjectDescription>
             </CardContent>
+
           </ProjectCard>
         ))}
       </ProjectsGrid>

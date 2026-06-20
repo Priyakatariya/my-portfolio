@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <span>
-        Designed & Built by <Brand>Priya Katariya</Brand>{' '}
+        Designed & Built by <Brand>Priya</Brand>{' '}
         with <FaHeart style={{ color: '#7c3aed', margin: '0 3px', verticalAlign: 'middle' }} />
       </span>
       <span>© {new Date().getFullYear()} · NIT Kurukshetra · B.Tech IT</span>

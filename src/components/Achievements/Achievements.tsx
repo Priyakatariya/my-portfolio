@@ -24,6 +24,11 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 `;
 
 const Card = styled(motion.div)`
@@ -63,40 +68,46 @@ const Content = styled.div`
   }
 `;
 
-const achievements = [
-  {
-    icon: <FaTrophy />,
-    title: "Social Winter of Code (SWoC '26)",
-    desc: "Ranked among <strong>Top 100 contributors</strong> globally."
-  },
-  {
-    icon: <FaCode />,
-    title: "LeetCode",
-    desc: "Peak rating <strong>1805</strong> (Top 10.1% globally)."
-  },
-  {
-    icon: <FaStar />,
-    title: "CodeChef",
-    desc: "3-Star coder (Peak Rating: <strong>1725</strong>); secured Global Rank 203 in Starters 213 and 254 in Starters 215."
-  },
-  {
-    icon: <FaMedal />,
-    title: "Codeforces",
-    desc: "Pupil with a maximum rating of <strong>1305</strong>."
-  },
-  {
-    icon: <FaCode />,
-    title: "Competitive Programming",
-    desc: "Solved <strong>1700+ DSA problems</strong> across competitive programming platforms."
-  }
-];
-
 const Achievements: React.FC = () => {
+
+  const dynamicAchievements = [
+    {
+      icon: <FaCode />,
+      title: "Problem Solving",
+      desc: "Solved <strong>1800+ DSA problems</strong> across multiple coding platforms."
+    },
+    {
+      icon: <FaMedal />,
+      title: "LeetCode",
+      desc: "Achieved the <strong>Knight</strong> badge with a peak contest rating of <strong>1876</strong>."
+    },
+    {
+      icon: <FaStar />,
+      title: "CodeChef",
+      desc: "Attained <strong>3-Star</strong> status with a peak rating of <strong>1725</strong>; secured Global Ranks 192, 203, and 931."
+    },
+    {
+      icon: <FaMedal />,
+      title: "Codeforces",
+      desc: "Achieved the <strong>Specialist</strong> title with a peak rating of <strong>1430</strong>."
+    },
+    {
+      icon: <FaTrophy />,
+      title: "Open Source - SWoC",
+      desc: "Secured <strong>Rank 51</strong> globally in the Social Winter of Code (SWoC '26)."
+    },
+    {
+      icon: <FaTrophy />,
+      title: "Open Source - SSoC",
+      desc: "Secured <strong>Rank 26</strong> globally in the Social Summer of Code (SSoC '25) among 1000+ contributors."
+    }
+  ];
+
   return (
     <Container>
       <Title>Achievements</Title>
       <Grid>
-        {achievements.map((item, i) => (
+        {dynamicAchievements.map((item, i) => (
           <Card
             key={i}
             initial={{ opacity: 0, y: 20 }}

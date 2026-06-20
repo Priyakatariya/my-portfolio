@@ -1,13 +1,13 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Stars, Float, Icosahedron, MeshDistortMaterial, Grid, Sphere, Ring, TorusKnot, Torus, Box } from '@react-three/drei';
+import { Stars, Float, Icosahedron, MeshDistortMaterial, Grid, Sphere, TorusKnot, Torus, Box } from '@react-three/drei';
 import * as THREE from 'three';
 
 const MovingObject = ({ children, speed = 1, range = 3, offset = 0 }: any) => {
   const groupRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
   const isMobile = viewport.width < 5;
-  const scale = isMobile ? 0.65 : 1;
+  const scale = isMobile ? 0.45 : 1;
 
   useFrame((state) => {
     const t = state.clock.elapsedTime * speed + offset;
@@ -222,6 +222,22 @@ const AnimatedGrid = () => {
   );
 };
 
+const ResponsiveStars = () => {
+  const { viewport } = useThree();
+  const isMobile = viewport.width < 5;
+  return (
+    <Stars 
+      radius={150} 
+      depth={80} 
+      count={isMobile ? 2000 : 5000} 
+      factor={isMobile ? 4 : 6} 
+      saturation={0.5} 
+      fade 
+      speed={1.5} 
+    />
+  );
+};
+
 const pageBgColors: Record<string, string> = {
   '/':            '#07071a',
   '/experience':  '#03101a',
@@ -259,7 +275,7 @@ const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ location }) => {
         <directionalLight position={[10, 10, 5]} intensity={1} color="#a78bfa" />
         <pointLight position={[-10, 5, -10]} intensity={1} color="#38bdf8" />
 
-        <Stars radius={150} depth={80} count={5000} factor={6} saturation={0.5} fade speed={1.5} />
+        <ResponsiveStars />
         <AnimatedGrid />
         
         {renderScene()}

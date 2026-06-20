@@ -53,3 +53,12 @@ a:hover {
   background: #7c3aed;
   border-radius: 3px;
 }
+
+@media (max-width: 768px) {
+  :root {
+    letter-spacing: -0.01em;
+  }
+  body {
+    font-size: 14px;
+  }
+}

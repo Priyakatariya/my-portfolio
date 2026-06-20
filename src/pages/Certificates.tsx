@@ -10,19 +10,19 @@ import { FaTimes, FaExpand, FaAward } from 'react-icons/fa';
 //     issuer, date, and image filename.
 // ─────────────────────────────────────────────────────────────────
 const certificates = [
-  { id: 1,  title: 'React & JavaScript Development', issuer: 'Udemy',      date: 'Jan 2024', image: '/images/certificates/cert1.png', color: '#7c3aed' },
-  { id: 2,  title: 'Python for Data Science',         issuer: 'Coursera',   date: 'Mar 2024', image: '/images/certificates/cert2.png', color: '#0891b2' },
-  { id: 3,  title: 'Machine Learning Fundamentals',   issuer: 'Google',     date: 'May 2024', image: '/images/certificates/cert3.png', color: '#059669' },
-  { id: 4,  title: 'Full Stack Web Development',      issuer: 'freeCodeCamp', date: 'Aug 2024', image: '/images/certificates/cert4.png', color: '#8b5cf6' },
-  { id: 5,  title: 'Data Structures & Algorithms',    issuer: 'LeetCode',   date: 'Sep 2024', image: '/images/certificates/cert5.png', color: '#d97706' },
-  { id: 6,  title: 'Cloud Practitioner Essentials',   issuer: 'AWS',        date: 'Oct 2024', image: '/images/certificates/cert6.png', color: '#2563eb' },
-  // ── Repeat cert1-6 as placeholders to fill up 12 slots ──
-  { id: 7,  title: 'Node.js Backend Mastery',         issuer: 'Udemy',      date: 'Nov 2024', image: '/images/certificates/cert1.png', color: '#7c3aed' },
-  { id: 8,  title: 'Firebase & Firestore',             issuer: 'Google',     date: 'Dec 2024', image: '/images/certificates/cert3.png', color: '#059669' },
-  { id: 9,  title: 'MongoDB for Developers',           issuer: 'MongoDB',    date: 'Jan 2025', image: '/images/certificates/cert2.png', color: '#0891b2' },
-  { id: 10, title: 'TypeScript Deep Dive',             issuer: 'Frontend Masters', date: 'Feb 2025', image: '/images/certificates/cert4.png', color: '#8b5cf6' },
-  { id: 11, title: 'Open Source Contribution Badge',   issuer: 'SSoC',       date: 'Aug 2025', image: '/images/certificates/cert5.png', color: '#d97706' },
-  { id: 12, title: 'Mentor Recognition Award',         issuer: 'GSSoC',      date: 'Oct 2025', image: '/images/certificates/cert6.png', color: '#2563eb' },
+  { id: 1,  title: 'SWoC 2026 - Top Contributor & Winner', issuer: 'Social Winter of Code', date: '2026', image: '/images/certificates/cert1.jpeg', color: '#fbbf24' },
+  { id: 2,  title: 'SWoC 2026 - Participation',          issuer: 'Social Winter of Code', date: '2026', image: '/images/certificates/cert2.jpeg', color: '#7c3aed' },
+  { id: 3,  title: 'Machine Learning Cohort \'26',       issuer: 'Codess.Cafe',           date: '2026', image: '/images/certificates/cert3.jpeg', color: '#ec4899' },
+  { id: 4,  title: 'GSSoC 2025 - Outstanding Mentor',    issuer: 'GirlScript Summer of Code', date: '2025', image: '/images/certificates/cert4.jpeg', color: '#0891b2' },
+  { id: 5,  title: 'SSoC Season 4 - Participation',      issuer: 'Social Summer of Code', date: '2025', image: '/images/certificates/cert5.jpeg', color: '#f59e0b' },
+  { id: 6,  title: 'Postman API Fundamentals Student Expert', issuer: 'Postman',         date: 'Jan 2025', image: '/images/certificates/cert6.jpeg', color: '#ff6c37' },
+  { id: 7,  title: 'SheFi Season 13 Graduate',           issuer: 'SheFi',                 date: 'Jun 2025', image: '/images/certificates/cert7.jpeg', color: '#a855f7' },
+  { id: 8,  title: 'Healthcare AI & ML Techniques',      issuer: 'NIT Kurukshetra',       date: 'Jan 2025', image: '/images/certificates/cert8.png',  color: '#22c55e' },
+  { id: 9,  title: '160 Days of Problem Solving',        issuer: 'GeeksforGeeks',         date: '2026',      image: '/images/certificates/cert9.png',  color: '#16a34a' },
+  { id: 10, title: 'Supervised Machine Learning',        issuer: 'DeepLearning.AI',       date: 'Mar 2026', image: '/images/certificates/cert10.png', color: '#0284c7' },
+  { id: 11, title: 'Smart India Hackathon 2025',         issuer: 'NIT Kurukshetra (Internal)', date: '2025', image: '/images/certificates/cert11.jpeg', color: '#4f46e5' },
+  { id: 12, title: 'Graph Theory Programming Camp',      issuer: 'AlgoUniversity',         date: '2025',      image: '/images/certificates/cert12.jpeg', color: '#dc2626' },
+  { id: 13, title: 'Dynamic Programming Camp',           issuer: 'AlgoUniversity',         date: '2025',      image: '/images/certificates/cert13.jpeg', color: '#2563eb' },
 ];
 
 // ── Styled Components ────────────────────────────────────────────
@@ -33,7 +33,7 @@ const PageWrapper = styled.div`
 `;
 
 const SectionTitle = styled(motion.h2)`
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 900;
   margin-bottom: 0.5rem;
   text-align: center;
@@ -44,19 +44,17 @@ const SectionTitle = styled(motion.h2)`
   letter-spacing: -0.02em;
 `;
 
-const Subtitle = styled(motion.p)`
-  text-align: center;
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 1rem;
-  margin-bottom: 3.5rem;
-`;
-
 const Grid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
   max-width: 1300px;
   margin: 0 auto;
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const Card = styled(motion.div)<{ accent: string }>`
@@ -220,14 +218,6 @@ const Certificates: React.FC = () => {
       >
         Certifications
       </SectionTitle>
-      <Subtitle
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        Click any certificate to view full-size · Drop your own images in{' '}
-        <code style={{ color: '#fbbf24', fontSize: '0.85em' }}>public/images/certificates/</code>
-      </Subtitle>
 
       <Grid
         variants={containerVariants}

@@ -50,6 +50,7 @@ const TextContent = styled(motion.div)`
   }
 `;
 
+/*
 const ImageContainer = styled(motion.div)`
   position: relative;
   max-width: 300px;
@@ -99,6 +100,7 @@ const ProfileImage = styled.div`
     transform: scale(1.05);
   }
 `;
+*/
 
 const About: React.FC = () => {
   return (
@@ -113,19 +115,19 @@ const About: React.FC = () => {
         <ContentGrid>
           <TextContent>
             <p>
-              Hi, I’m Priya — a passionate Software Developer and competitive programmer pursuing B.Tech in Information Technology at National Institute of Technology Kurukshetra with a CGPA of 8.96.
+              Hi, I'm <strong>Priya</strong>—a driven Software Developer, open-source enthusiast, and competitive programmer currently pursuing my B.Tech in Information Technology at <strong>NIT Kurukshetra</strong>.
             </p>
             <p>
-              I specialize in building scalable full-stack web applications using React.js, Next.js, Node.js, Express.js, MongoDB, and Firebase. I enjoy developing products that combine clean architecture, performance optimization, and intuitive user experiences.
+              I specialize in architecting scalable, full-stack web applications using <strong>React.js, Next.js, Node.js, and MongoDB</strong>, alongside exploring the depths of <strong>Machine Learning</strong> and predictive analytics. My core focus is always on writing clean, modular code, optimizing performance, and crafting incredibly intuitive user experiences.
             </p>
             <p>
-              Beyond development, I am highly active in open source and technical communities. I ranked among the Top Contributors in Social Summer of Code and currently mentor developers in GirlScript Summer of Code, where I review pull requests, guide contributors, and promote scalable development practices.
+              My competitive programming journey is a testament to my love for complex problem-solving. Having conquered <strong>over 1,800+ DSA problems</strong> across LeetCode, CodeChef, and Codeforces, I thrive under pressure and deeply enjoy translating intricate algorithmic challenges into highly optimized solutions.
             </p>
             <p>
-              I am also passionate about problem solving and algorithmic thinking, having solved 1700+ DSA problems across platforms including LeetCode, CodeChef, and Codeforces. My consistent involvement in competitive programming has strengthened my analytical thinking, debugging skills, and ability to write optimized solutions under pressure.
+              Beyond the code editor, I actively contribute to the tech ecosystem. I proudly secured <strong>Rank 26 globally</strong> in the Social Summer of Code (SSoC '25) and currently serve as a mentor for the GirlScript Summer of Code, where I review pull requests, guide emerging developers, and foster open-source collaboration.
             </p>
             <p>
-              I love working on impactful products, collaborating with teams, and continuously learning new technologies to build software that creates real-world value.
+              I am relentlessly curious, always eager to collaborate with dynamic teams, and passionate about leveraging cutting-edge technologies to build software that creates genuine, real-world value.
             </p>
           </TextContent>
         </ContentGrid>

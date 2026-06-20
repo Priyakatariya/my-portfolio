@@ -19,6 +19,11 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   z-index: 10;
+  
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 const Greeting = styled(motion.p)`
@@ -31,19 +36,19 @@ const Greeting = styled(motion.p)`
 `;
 
 const Name = styled(motion.h1)`
-  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-size: clamp(2.5rem, 8vw, 6rem);
   font-weight: 900;
   line-height: 1.1;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #fff;
   letter-spacing: -0.02em;
 `;
 
 const Subtitle = styled(motion.h2)`
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.5rem, 5vw, 3.5rem);
   font-weight: 800;
   line-height: 1.2;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   background: linear-gradient(135deg, #a78bfa, #38bdf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -51,11 +56,11 @@ const Subtitle = styled(motion.h2)`
 `;
 
 const Description = styled(motion.p)`
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 2vw, 1.15rem);
   color: rgba(255, 255, 255, 0.7);
   max-width: 600px;
   line-height: 1.6;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 
   strong {
     color: #fff;
@@ -67,6 +72,11 @@ const SocialLinks = styled(motion.div)`
   display: flex;
   gap: 1.5rem;
   margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    width: 100%;
+  }
 `;
 
 const SocialIcon = styled.a`

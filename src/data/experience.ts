@@ -41,7 +41,7 @@ export const experience: ExperienceType[] = [
   {
     title: 'Open Source Contributor',
     company: 'Social Winter of Code (SWoC \'26)',
-    duration: 'Dec 2025 – Feb 2026',
+    duration: 'Dec 2025 – March 2026',
     description: [
       'Ranked in the Top 100 contributors globally out of 1000+ participants.',
       'Got 6+ pull requests merged across 4–5 repositories spanning various tech stacks.',
@@ -50,3 +50,4 @@ export const experience: ExperienceType[] = [
     ],
   },
 ];
+ 

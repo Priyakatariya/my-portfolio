@@ -15,8 +15,8 @@ export const codingProfiles: CodingProfile[] = [
   {
     platform: 'LeetCode',
     icon: '🔥',
-    stat: '1805',
-    statLabel: 'Peak Rating · Top 10.1%',
+    stat: '1848',
+    statLabel: 'Peak Rating · Top 8.5%',
     link: 'https://leetcode.com/u/priya_-8/',
     color: '#ffa116',
     bgColor: 'rgba(255,161,22,0.07)',
