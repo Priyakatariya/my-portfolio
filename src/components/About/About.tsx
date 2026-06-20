@@ -50,58 +50,6 @@ const TextContent = styled(motion.div)`
   }
 `;
 
-/*
-const ImageContainer = styled(motion.div)`
-  position: relative;
-  max-width: 300px;
-  margin: 0 auto;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: -20px;
-    bottom: -20px;
-    border: 2px solid #38bdf8;
-    border-radius: 12px;
-    z-index: 0;
-    transition: all 0.3s ease;
-  }
-  
-  &:hover::before {
-    top: 15px;
-    left: 15px;
-    right: -15px;
-    bottom: -15px;
-  }
-`;
-
-const ProfileImage = styled.div`
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 12px;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  border: 1px solid rgba(167, 139, 250, 0.3);
-  box-shadow: 0 0 40px rgba(167, 139, 250, 0.2);
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-    transition: transform 0.5s ease;
-  }
-
-  &:hover img {
-    transform: scale(1.05);
-  }
-`;
-*/
-
 const About: React.FC = () => {
   return (
     <AboutContainer id="about">
