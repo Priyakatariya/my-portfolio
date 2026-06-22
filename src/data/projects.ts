@@ -33,7 +33,7 @@ export const projects: ProjectType[] = [
       'Plotly',
       'Google Earth Engine'
     ],
-    githubLink: 'https://github.com/Priyakatariya',
+    githubLink: 'https://github.com/Priyakatariya/Satellite_Based_Prediction_System',
     liveLink: '#',
     gradient: 'linear-gradient(135deg, #059669, #10b981)',
   },
@@ -57,7 +57,7 @@ export const projects: ProjectType[] = [
       'Node.js',
       'Express.js'
     ],
-    githubLink: 'https://github.com/Priyakatariya/Smart-Waste-Swaraj',
+    githubLink: 'https://github.com/Priyakatariya/smart-waste-swaraj',
     liveLink: '#',
     image: '/src/assets/smart_waste.png',
     gradient: 'linear-gradient(135deg, #10b981, #3b82f6)',
@@ -82,7 +82,7 @@ export const projects: ProjectType[] = [
       'Chart.js',
       'OpenAI SDK'
     ],
-    githubLink: 'https://github.com/Priyakatariya/MindEase',
+    githubLink: 'https://github.com/Priyakatariya/MindEase-Project',
     liveLink: '#',
     gradient: 'linear-gradient(135deg, #6e40c9, #c946ef)',
   },
@@ -103,7 +103,7 @@ export const projects: ProjectType[] = [
       'React Spring'
     ],
 
-    githubLink: 'https://github.com/Priyakatariya/AstroMedia',
+    githubLink: 'https://github.com/Priyakatariya/astro',
     liveLink: '#',
     image: '/src/assets/astromedia.png',
     gradient: 'linear-gradient(135deg, #0f2027, #2c5364)',
@@ -157,7 +157,7 @@ export const projects: ProjectType[] = [
       'MongoDB'
     ],
 
-    githubLink: 'https://github.com/Priyakatariya/AgriChain',
+    githubLink: 'https://github.com/Priyakatariya/agri-chain',
     liveLink: '#',
     image: '/src/assets/agrichain.png',
     gradient: 'linear-gradient(135deg, #134e5e, #71b280)',
