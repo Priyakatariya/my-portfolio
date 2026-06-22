@@ -1,15 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import Hero from '../components/Hero/Hero';
-import About from '../components/About/About';
+import Contact from '../components/Contact/Contact';
 
 const PageWrapper = styled(motion.div)`
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 65px);
+  padding-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const Home: React.FC = () => {
+const ContactPage: React.FC = () => {
   return (
     <PageWrapper
       initial={{ opacity: 0, y: 20 }}
@@ -17,10 +20,9 @@ const Home: React.FC = () => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.5 }}
     >
-      <Hero />
-      <About />
+      <Contact />
     </PageWrapper>
   );
 };
 
-export default Home;
+export default ContactPage;

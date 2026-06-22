@@ -118,6 +118,7 @@ const navItems = [
   { name: 'Skills', to: '/skills' },
   { name: 'Certificates', to: '/certificates' },
   { name: 'Extras', to: '/extras' },
+  { name: 'Contact', to: '/contact' },
 ];
 
 const Navigation: React.FC = () => {

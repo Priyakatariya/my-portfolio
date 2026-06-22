@@ -13,6 +13,7 @@ import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Certificates from './pages/Certificates';
 import Extras from './pages/Extras';
+import ContactPage from './pages/ContactPage';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -94,6 +95,7 @@ const AppRoutes = () => {
             <Route path="/skills" element={<Skills />} />
             <Route path="/certificates" element={<Certificates />} />
             <Route path="/extras" element={<Extras />} />
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </AnimatePresence>
         <Footer />
