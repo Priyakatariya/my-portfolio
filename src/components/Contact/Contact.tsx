@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaLinkedin, FaGithub, FaPhone } from 'react-icons/fa';
+import { FaEnvelope, FaLinkedin, FaGithub, FaPhone, FaPaperPlane } from 'react-icons/fa';
 
 const Section = styled.section`
   padding: 80px 5%;
   max-width: 1100px;
   margin: 0 auto;
   text-align: center;
-` ;
+`;
 
 const Title = styled(motion.h2)`
   font-size: 2.8rem;
@@ -28,9 +28,74 @@ const Desc = styled(motion.p)`
   line-height: 1.7;
 `;
 
-const EmailBtn = styled(motion.a)`
+const FormContainer = styled(motion.form)`
+  max-width: 600px;
+  margin: 0 auto 4rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  backdrop-filter: blur(10px);
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+`;
+
+const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 0.5rem;
+`;
+
+const Label = styled.label`
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+`;
+
+const Input = styled.input`
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: #a855f7;
+  }
+`;
+
+const TextArea = styled.textarea`
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  min-height: 150px;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: #a855f7;
+  }
+`;
+
+const SubmitBtn = styled.button`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.6rem;
   padding: 1rem 2.5rem;
   background: linear-gradient(135deg, #7c3aed, #06b6d4);
@@ -38,14 +103,27 @@ const EmailBtn = styled(motion.a)`
   font-weight: 700;
   font-size: 1rem;
   border-radius: 14px;
-  text-decoration: none;
-  margin-bottom: 3rem;
+  border: none;
+  cursor: pointer;
   transition: opacity 0.25s ease, transform 0.25s ease;
+  margin-top: 1rem;
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 0.85;
     transform: translateY(-3px);
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
+
+const StatusMessage = styled.p<{ success?: boolean }>`
+  font-size: 0.95rem;
+  margin-top: -0.5rem;
+  color: ${({ success }) => (success ? '#10b981' : '#f43f5e')};
+  font-weight: 500;
 `;
 
 const SocialRow = styled(motion.div)`
@@ -80,6 +158,36 @@ const SocialCard = styled(motion.a)<{ color: string }>`
 `;
 
 const Contact: React.FC = () => {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('loading');
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      // Using FormSubmit API for direct email forwarding without backend
+      const res = await fetch("https://formsubmit.co/ajax/priyakatariya2007@gmail.com", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (res.ok) {
+        setStatus('success');
+        form.reset();
+        setTimeout(() => setStatus('idle'), 5000); 
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      setStatus('error');
+    }
+  };
+
   return (
     <Section id="contact">
       <Title
@@ -96,19 +204,44 @@ const Contact: React.FC = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.15 }}
       >
-        I'm open to new opportunities, collaborations, or just a friendly chat. 
-        Feel free to reach out!
+        Have a question or want to work together? Send me a message and I'll get back to you directly on my email!
       </Desc>
-      <motion.div
+
+      <FormContainer
+        onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.25 }}
       >
-        <EmailBtn href="mailto:priyakatariya2007@gmail.com">
-          <FaEnvelope /> Say Hello!
-        </EmailBtn>
-      </motion.div>
+        {/* Anti-spam and styling configurations for FormSubmit */}
+        <input type="hidden" name="_subject" value="New Portfolio Contact Message!" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" style={{ display: 'none' }} />
+
+        <InputGroup>
+          <Label>Name</Label>
+          <Input type="text" name="name" required placeholder="Your Name" />
+        </InputGroup>
+        
+        <InputGroup>
+          <Label>Email Address</Label>
+          <Input type="email" name="email" required placeholder="your.email@example.com" />
+        </InputGroup>
+        
+        <InputGroup>
+          <Label>Message</Label>
+          <TextArea name="message" required placeholder="Hello Priya, I'd like to discuss..." />
+        </InputGroup>
+
+        {status === 'success' && <StatusMessage success>Message sent successfully! I'll be in touch soon.</StatusMessage>}
+        {status === 'error' && <StatusMessage>Oops! Something went wrong. Please try again or email directly.</StatusMessage>}
+
+        <SubmitBtn type="submit" disabled={status === 'loading'}>
+          {status === 'loading' ? 'Sending...' : <><FaPaperPlane /> Send Message</>}
+        </SubmitBtn>
+      </FormContainer>
+
       <SocialRow
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
