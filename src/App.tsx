@@ -25,11 +25,20 @@ const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth;
   }
 
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
   body, html, #root {
     width: 100%;
     min-height: 100vh;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: #07071a;
+    /* Ultra-premium dark jewel tone gradient for a professional, recruiter-impressing look */
+    background: linear-gradient(-45deg, #050505, #0f172a, #2e1065, #082f49, #050505);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
     color: rgba(255, 255, 255, 0.88);
     overflow-x: hidden;
   }
@@ -49,9 +58,9 @@ const GlobalStyle = createGlobalStyle`
   strong { font-weight: 700; }
 
   ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #07071a; }
+  ::-webkit-scrollbar-track { background: #9dad22; }
   ::-webkit-scrollbar-thumb { background: #5b21b6; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+  ::-webkit-scrollbar-thumb:hover { background: #042930; }
 `;
 
 const AppContainer = styled.div`
@@ -70,7 +79,7 @@ const AppRoutes = () => {
 
   return (
     <>
-      <ThreeBackground location={location.pathname} />
+      <ThreeBackground />
       <Navigation />
       <MainContent>
         <AnimatePresence mode="wait">

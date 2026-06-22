@@ -10,7 +10,7 @@ const NavWrapper = styled(motion.nav)`
   left: 0;
   width: 100%;
   height: 65px;
-  background: rgba(7, 7, 18, 0.75);
+  background: linear-gradient(90deg, rgba(30,27,75,0.7), rgba(15,23,42,0.85), rgba(49,46,129,0.7));
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(124, 58, 237, 0.12);
@@ -83,7 +83,7 @@ const MobileMenu = styled(motion.div)`
   top: 65px;
   left: 0;
   right: 0;
-  background: rgba(7, 7, 18, 0.97);
+  background: linear-gradient(180deg, rgba(30,27,75,0.95), rgba(15,23,42,0.98), rgba(15,23,42,0.98));
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(124, 58, 237, 0.12);

@@ -141,7 +141,7 @@ const Hero: React.FC = () => {
         </Description>
 
         <SocialLinks variants={itemVariants}>
-          <SocialIcon href="https://github.com/priyakatariya" target="_blank" rel="noreferrer" aria-label="GitHub">
+          <SocialIcon href="https://github.com/Priyakatariya" target="_blank" rel="noreferrer" aria-label="GitHub">
             <FaGithub />
           </SocialIcon>
           <SocialIcon href="https://linkedin.com/in/priya-27a522333" target="_blank" rel="noreferrer" aria-label="LinkedIn">
@@ -150,9 +150,7 @@ const Hero: React.FC = () => {
           <SocialIcon href="mailto:priyakatariya2007@gmail.com" aria-label="Email">
             <FaEnvelope />
           </SocialIcon>
-          <SocialIcon href="https://codolio.com/profile/Priyakatariya" target="_blank" rel="noreferrer" aria-label="Codolio">
-            <FaCode />
-          </SocialIcon>
+
         </SocialLinks>
 
         <motion.div variants={itemVariants}>

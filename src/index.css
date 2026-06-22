@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.9);
-  background-color: #08081a;
+  background-color: transparent;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -20,11 +20,17 @@ html {
   scroll-behavior: smooth;
 }
 
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 body {
-  background-color: #08081a;
   color: rgba(255, 255, 255, 0.9);
   min-height: 100vh;
   overflow-x: hidden;
+  background: transparent;
 }
 
 #root {
