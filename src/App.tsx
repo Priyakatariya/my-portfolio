@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
@@ -76,6 +76,10 @@ const MainContent = styled.main`
 
 const AppRoutes = () => {
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <>
