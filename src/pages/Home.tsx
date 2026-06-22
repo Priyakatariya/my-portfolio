@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import Hero from '../components/Hero/Hero';
 import About from '../components/About/About';
+import Contact from '../components/Contact/Contact';
 
 const PageWrapper = styled(motion.div)`
   width: 100%;
@@ -19,6 +20,7 @@ const Home: React.FC = () => {
     >
       <Hero />
       <About />
+      <Contact />
     </PageWrapper>
   );
 };
