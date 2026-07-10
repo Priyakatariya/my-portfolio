@@ -18,7 +18,7 @@ export const projects: ProjectType[] = [
     title: 'MargIQ',
     subtitle: 'AI Career Architect',
     description:
-      'An advanced AI-driven career navigation platform providing personalized roadmaps, career comparisons, and mentorship designed specifically to empower India\\'s youth.',
+      "An advanced AI-driven career navigation platform providing personalized roadmaps, career comparisons, and mentorship designed specifically to empower India's youth.",
     highlights: [
       'Built an AI-driven platform for advanced career navigation, generating personalized roadmaps and career comparisons.',
       'Integrated mentorship features to provide guided support and actionable insights for students.',
