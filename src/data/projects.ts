@@ -15,13 +15,13 @@ export interface ProjectType {
 
 export const projects: ProjectType[] = [
   {
-    title: 'Margiq',
-    subtitle: 'Community Accessibility Platform',
+    title: 'MargIQ',
+    subtitle: 'AI Career Architect',
     description:
-      'A platform designed to bridge accessibility gaps in rural areas. Launched the MVP and cultivated a supportive network of over 1,200 connections by building in public.',
+      'An advanced AI-driven career navigation platform providing personalized roadmaps, career comparisons, and mentorship designed specifically to empower India\\'s youth.',
     highlights: [
-      'Developed and launched the MVP to bridge accessibility gaps for rural communities.',
-      'Grew a supportive community network of over 1,200 connections by building the project in public.',
+      'Built an AI-driven platform for advanced career navigation, generating personalized roadmaps and career comparisons.',
+      'Integrated mentorship features to provide guided support and actionable insights for students.',
       'Designed a highly responsive and accessible user interface.'
     ],
     technologies: [
@@ -31,7 +31,6 @@ export const projects: ProjectType[] = [
       'TypeScript'
     ],
     liveLink: 'https://margiq-ai.vercel.app/',
-    githubLink: 'https://github.com/Priyakatariya',
     gradient: 'linear-gradient(135deg, #f59e0b, #ea580c)',
   },
   {
