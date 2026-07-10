@@ -15,6 +15,26 @@ export interface ProjectType {
 
 export const projects: ProjectType[] = [
   {
+    title: 'Margiq',
+    subtitle: 'Community Accessibility Platform',
+    description:
+      'A platform designed to bridge accessibility gaps in rural areas. Launched the MVP and cultivated a supportive network of over 1,200 connections by building in public.',
+    highlights: [
+      'Developed and launched the MVP to bridge accessibility gaps for rural communities.',
+      'Grew a supportive community network of over 1,200 connections by building the project in public.',
+      'Designed a highly responsive and accessible user interface.'
+    ],
+    technologies: [
+      'React.js',
+      'Next.js',
+      'Tailwind CSS',
+      'TypeScript'
+    ],
+    liveLink: 'https://margiq-ai.vercel.app/',
+    githubLink: 'https://github.com/Priyakatariya',
+    gradient: 'linear-gradient(135deg, #f59e0b, #ea580c)',
+  },
+  {
     title: 'Satellite-Based Air Quality Prediction System',
     subtitle: 'Machine Learning Dashboard',
     description:

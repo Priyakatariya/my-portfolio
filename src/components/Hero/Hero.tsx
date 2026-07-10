@@ -136,7 +136,7 @@ const Hero: React.FC = () => {
         <Subtitle variants={itemVariants}>I build things for the web.</Subtitle>
         
         <Description variants={itemVariants}>
-          I'm a B.Tech IT student at <strong>NIT Kurukshetra</strong> (CGPA 8.96) specializing in building exceptional digital experiences. 
+          I'm a B.Tech IT student at <strong>NIT Kurukshetra</strong> (CGPA 8.93) specializing in building exceptional digital experiences. 
           Currently, I'm focused on full-stack development, open-source contributions, and tackling complex algorithmic challenges.
         </Description>
 
